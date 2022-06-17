@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.repository;
 
+import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.stub.UserStub;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserRepositoryImplTests {
 
 	@Autowired
-	@Qualifier("impl")
+	@Qualifier(AppProfile.IMPL)
 	private UserRepository userRepository;
 
 	@Test

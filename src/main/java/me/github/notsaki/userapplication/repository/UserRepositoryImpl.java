@@ -1,5 +1,6 @@
-package me.github.notsaki.userapplication.repository.impl;
+package me.github.notsaki.userapplication.repository;
 
+import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 @Repository
-@Qualifier("impl")
+@Qualifier(AppProfile.IMPL)
 public class UserRepositoryImpl implements UserRepository {
 
     private final EntityManager entityManager;
