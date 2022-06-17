@@ -1,12 +1,12 @@
 package me.github.notsaki.userapplication.domain.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Optional;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
 	@Id
 	@GeneratedValue
@@ -24,7 +24,7 @@ public class User {
 	private Gender gender;
 
 	@Column(name = "birthdate", nullable = false)
-	private Date birthdate;
+	private LocalDate birthdate;
 
 	@Column(name = "work_address")
 	private String workAddress = null;
@@ -35,7 +35,7 @@ public class User {
 	protected User() {
 	}
 
-	public User(int id, String name, String surname, Gender gender, Date birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
+	public User(int id, String name, String surname, Gender gender, LocalDate birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -45,7 +45,7 @@ public class User {
 		this.homeAddress = homeAddress.orElse(null);
 	}
 
-	public User(int id, String name, String surname, Gender gender, Date birthdate) {
+	public User(int id, String name, String surname, Gender gender, LocalDate birthdate) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -53,14 +53,14 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public User(String name, String surname, Gender gender, Date birthdate) {
+	public User(String name, String surname, Gender gender, LocalDate birthdate) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.birthdate = birthdate;
 	}
 
-	public User(String name, String surname, Gender gender, Date birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
+	public User(String name, String surname, Gender gender, LocalDate birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
@@ -99,11 +99,11 @@ public class User {
 		this.gender = gender;
 	}
 
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 
