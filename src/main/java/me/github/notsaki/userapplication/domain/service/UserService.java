@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface UserService {
 	public ResponseUserDto save(ReceiveUserDto userDto);
-	public void deleteById(int id);
+	public int deleteById(int id);
 	public List<ResponseUserDto> findAll();
 }

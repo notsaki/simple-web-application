@@ -11,7 +11,9 @@ public record ResponseUserDto(
 		String surname,
 		Gender gender,
 		LocalDate birthdate,
-		@Nullable String workAddress,
-		@Nullable String homeAddress
+		@Nullable
+		String workAddress,
+		@Nullable
+		String homeAddress
 ) {
 }

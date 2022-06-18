@@ -1,10 +1,9 @@
-package me.github.notsaki.userapplication.repository.mock;
+package me.github.notsaki.userapplication.util.mock.repository;
 
 import me.github.notsaki.userapplication.domain.model.AppProfile;
-import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
-import me.github.notsaki.userapplication.stub.UserStub;
+import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +14,8 @@ import java.util.*;
 public class UserRepositoryMock implements UserRepository {
 	@Override
 	public User save(User user) {
-		return UserStub.ForSave();
+		user.setId(1);
+		return user;
 	}
 
 	@Override
@@ -25,6 +25,6 @@ public class UserRepositoryMock implements UserRepository {
 
 	@Override
 	public List<User> findAll() {
-		return UserStub.ListOfUsers();
+		return UserStub.List();
 	}
 }

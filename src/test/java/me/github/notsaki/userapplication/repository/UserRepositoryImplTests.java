@@ -1,15 +1,15 @@
 package me.github.notsaki.userapplication.repository;
 
+import me.github.notsaki.userapplication.domain.dto.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
-import me.github.notsaki.userapplication.stub.UserStub;
+import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +24,7 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onSaveShouldReturnTheSameUser() {
-		var user = UserStub.ForSave();
+		var user = ReceiveUserStub.One().toUser();
 		var result = this.userRepository.save(user);
 
 		Assert.assertEquals(result, user);
@@ -32,7 +32,7 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onSaveShouldGenerateId() {
-		var user = UserStub.ForSave();
+		var user = ReceiveUserStub.One().toUser();
 		var result = this.userRepository.save(user);
 
 		Assert.assertTrue(result.getId().isPresent());
@@ -40,7 +40,11 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onFindAllShouldReturnTheSameAmountUsers() {
-		var users = UserStub.ListOfUsers();
+		var users = ReceiveUserStub
+				.List()
+				.stream()
+				.map(ReceiveUserDto::toUser)
+				.toList();
 
 		var generatedUsers = users
 				.stream()
@@ -54,7 +58,11 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onFindAllShouldReturnTheSameUsersAsInserted() {
-		var users = UserStub.ListOfUsers();
+		var users = ReceiveUserStub
+				.List()
+				.stream()
+				.map(ReceiveUserDto::toUser)
+				.toList();
 
 		var generatedUsers = users
 				.stream()
@@ -68,7 +76,11 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onDeleteShouldReturnOneRowAffected() {
-		var users = UserStub.ListOfUsers();
+		var users = ReceiveUserStub
+				.List()
+				.stream()
+				.map(ReceiveUserDto::toUser)
+				.toList();
 
 		this.userRepository.save(users.get(0));
 		var rowsAffected = this.userRepository.deleteById(users.get(0).getId().orElseThrow());
@@ -78,10 +90,10 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onDeleteUserShouldNotExist() {
-		var user = UserStub.ForSave();
+		var user = ReceiveUserStub.One().toUser();
 
 		var savedUser = this.userRepository.save(user);
-		this.userRepository.deleteById(user.getId().orElseThrow());
+		this.userRepository.deleteById(savedUser.getId().orElseThrow());
 		var users = this.userRepository.findAll();
 
 		Assert.assertFalse(users.contains(savedUser));

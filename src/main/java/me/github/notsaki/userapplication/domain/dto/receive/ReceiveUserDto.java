@@ -15,4 +15,14 @@ public record ReceiveUserDto(
 		@Nullable String workAddress,
 		@Nullable String homeAddress
 ) {
+	public User toUser() {
+		return new User(
+				this.name,
+				this.surname,
+				this.gender,
+				this.birthdate,
+				Optional.ofNullable(this.workAddress),
+				Optional.ofNullable(this.homeAddress)
+		);
+	}
 }

@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.domain.model;
 
 import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,9 +30,11 @@ public class User {
 	private LocalDate birthdate;
 
 	@Column(name = "work_address")
+	@Nullable
 	private String workAddress = null;
 
 	@Column(name = "home_address")
+	@Nullable
 	private String homeAddress = null;
 
 	protected User() {
@@ -67,6 +70,8 @@ public class User {
 		this.surname = surname;
 		this.gender = gender;
 		this.birthdate = birthdate;
+		this.workAddress = workAddress.orElse(null);
+		this.homeAddress = homeAddress.orElse(null);
 	}
 
 	public Optional<Integer> getId() {
@@ -145,4 +150,17 @@ public class User {
 	public int hashCode() {
 		return Objects.hash(id, name, surname, gender, birthdate, workAddress, homeAddress);
 	}
+
+	public ResponseUserDto toResponse() {
+		return new ResponseUserDto(
+				this.getId().orElseThrow(),
+				this.getName(),
+				this.getSurname(),
+				this.getGender(),
+				this.getBirthdate(),
+				this.getHomeAddress().orElse(null),
+				this.getWorkAddress().orElse(null)
+		);
+	}
+
 }

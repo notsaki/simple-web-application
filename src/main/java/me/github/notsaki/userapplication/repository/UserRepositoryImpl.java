@@ -4,6 +4,7 @@ import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Repository
 @Qualifier(AppProfile.IMPL)
+@Primary
 public class UserRepositoryImpl implements UserRepository {
 
     private final EntityManager entityManager;
