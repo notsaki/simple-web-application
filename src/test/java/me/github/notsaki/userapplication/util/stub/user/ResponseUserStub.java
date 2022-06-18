@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
-import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.User;
 
 import java.util.List;

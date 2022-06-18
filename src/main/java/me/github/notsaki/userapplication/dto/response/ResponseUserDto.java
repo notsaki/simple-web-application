@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.domain.dto.response;
+package me.github.notsaki.userapplication.dto.response;
 
 import me.github.notsaki.userapplication.domain.model.Gender;
 import org.springframework.lang.Nullable;

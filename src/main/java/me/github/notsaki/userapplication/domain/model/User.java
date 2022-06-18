@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.domain.model;
 
-import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;

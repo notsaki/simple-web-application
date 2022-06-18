@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.domain.service;
 
-import me.github.notsaki.userapplication.domain.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 
 import java.util.List;
 

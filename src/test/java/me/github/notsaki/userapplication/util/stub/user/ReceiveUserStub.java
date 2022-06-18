@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
-import me.github.notsaki.userapplication.domain.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.model.Gender;
 
 import java.time.LocalDate;

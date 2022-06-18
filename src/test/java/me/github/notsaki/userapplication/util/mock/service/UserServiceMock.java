@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
-import me.github.notsaki.userapplication.domain.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.util.stub.user.ResponseUserStub;

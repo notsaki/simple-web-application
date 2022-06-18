@@ -1,12 +1,11 @@
 package me.github.notsaki.userapplication.service;
 
-import me.github.notsaki.userapplication.domain.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.dto.response.ResponseUserDto;
+import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
