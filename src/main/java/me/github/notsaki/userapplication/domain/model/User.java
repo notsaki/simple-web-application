@@ -1,6 +1,5 @@
 package me.github.notsaki.userapplication.domain.model;
 
-import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -149,18 +148,6 @@ public class User {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name, surname, gender, birthdate, workAddress, homeAddress);
-	}
-
-	public ResponseUserDto toResponse() {
-		return new ResponseUserDto(
-				this.getId().orElseThrow(),
-				this.getName(),
-				this.getSurname(),
-				this.getGender(),
-				this.getBirthdate(),
-				this.getHomeAddress().orElse(null),
-				this.getWorkAddress().orElse(null)
-		);
 	}
 
 }

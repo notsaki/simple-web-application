@@ -1,10 +1,10 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
+import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.service.UserService;
-import me.github.notsaki.userapplication.util.stub.user.ResponseUserStub;
+import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +14,8 @@ import java.util.List;
 @Qualifier(AppProfile.MOCK)
 public class UserServiceMock implements UserService {
 	@Override
-	public ResponseUserDto save(ReceiveUserDto userDto) {
-		return ResponseUserStub.One();
+	public User save(ReceiveUserDto userDto) {
+		return UserStub.One();
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public List<ResponseUserDto> findAll() {
-		return ResponseUserStub.List();
+	public List<User> findAll() {
+		return UserStub.List();
 	}
 }

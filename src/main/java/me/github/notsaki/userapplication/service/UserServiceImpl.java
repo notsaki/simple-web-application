@@ -1,7 +1,6 @@
 package me.github.notsaki.userapplication.service;
 
 import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.dto.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
@@ -24,9 +23,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseUserDto save(ReceiveUserDto userDto) {
+	public User save(ReceiveUserDto userDto) {
 		var createdUser = userRepository.save(userDto.toUser());
-		return createdUser.toResponse();
+		return createdUser;
 	}
 
 	@Override
@@ -35,11 +34,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<ResponseUserDto> findAll() {
-		var users = this.userRepository.findAll();
-		return users
-				.stream()
-				.map(User::toResponse)
-				.toList();
+	public List<User> findAll() {
+		return this.userRepository.findAll();
 	}
 }
