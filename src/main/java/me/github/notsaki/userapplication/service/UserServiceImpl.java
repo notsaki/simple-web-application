@@ -7,11 +7,13 @@ import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Profile(AppProfile.IMPL)
 @Qualifier(AppProfile.IMPL)
 @Primary
 public class UserServiceImpl implements UserService {

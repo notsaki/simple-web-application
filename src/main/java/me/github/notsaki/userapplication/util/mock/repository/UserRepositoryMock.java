@@ -5,11 +5,13 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
+@Profile(AppProfile.MOCK)
 @Qualifier(AppProfile.MOCK)
 public class UserRepositoryMock implements UserRepository {
 	@Override
