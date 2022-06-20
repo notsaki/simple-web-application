@@ -5,7 +5,6 @@ import me.github.notsaki.userapplication.domain.model.User;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 public record ReceiveUserDto(
 		String name,
@@ -21,8 +20,8 @@ public record ReceiveUserDto(
 				this.surname,
 				this.gender,
 				this.birthdate,
-				Optional.ofNullable(this.workAddress),
-				Optional.ofNullable(this.homeAddress)
+				this.workAddress,
+				this.homeAddress
 		);
 	}
 }

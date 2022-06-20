@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User save(ReceiveUserDto userDto) {
-		var createdUser = userRepository.save(userDto.toUser());
-		return createdUser;
+		return userRepository.save(userDto.toUser());
 	}
 
 	@Override

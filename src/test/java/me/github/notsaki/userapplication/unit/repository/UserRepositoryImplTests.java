@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.repository;
+package me.github.notsaki.userapplication.unit.repository;
 
 import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
@@ -28,14 +28,6 @@ public class UserRepositoryImplTests {
 		var result = this.userRepository.save(user);
 
 		Assert.assertEquals(result, user);
-	}
-
-	@Test
-	public void onSaveShouldGenerateId() {
-		var user = ReceiveUserStub.One().toUser();
-		var result = this.userRepository.save(user);
-
-		Assert.assertTrue(result.getId().isPresent());
 	}
 
 	@Test
@@ -83,7 +75,7 @@ public class UserRepositoryImplTests {
 				.toList();
 
 		this.userRepository.save(users.get(0));
-		var rowsAffected = this.userRepository.deleteById(users.get(0).getId().orElseThrow());
+		var rowsAffected = this.userRepository.deleteById(users.get(0).getId());
 
 		Assert.assertEquals(1, rowsAffected);
 	}
@@ -93,7 +85,7 @@ public class UserRepositoryImplTests {
 		var user = ReceiveUserStub.One().toUser();
 
 		var savedUser = this.userRepository.save(user);
-		this.userRepository.deleteById(savedUser.getId().orElseThrow());
+		this.userRepository.deleteById(savedUser.getId());
 		var users = this.userRepository.findAll();
 
 		Assert.assertFalse(users.contains(savedUser));

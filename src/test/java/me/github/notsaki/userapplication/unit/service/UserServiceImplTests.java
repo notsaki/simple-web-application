@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.service;
+package me.github.notsaki.userapplication.unit.service;
 
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
@@ -32,7 +32,7 @@ public class UserServiceImplTests {
 		var result = this.userService.save(user);
 
 		var receive = user.toUser();
-		receive.setId(result.getId().orElseThrow());
+		receive.setId(result.getId());
 		Assert.assertEquals(result, receive);
 	}
 }

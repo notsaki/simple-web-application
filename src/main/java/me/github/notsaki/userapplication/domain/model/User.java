@@ -5,7 +5,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.Optional;
 
 @Entity
 @Table(name = "users")
@@ -39,14 +38,14 @@ public class User {
 	protected User() {
 	}
 
-	public User(int id, String name, String surname, Gender gender, LocalDate birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
+	public User(int id, String name, String surname, Gender gender, LocalDate birthdate, @Nullable String workAddress, @Nullable String homeAddress) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.birthdate = birthdate;
-		this.workAddress = workAddress.orElse(null);
-		this.homeAddress = homeAddress.orElse(null);
+		this.workAddress = workAddress;
+		this.homeAddress = homeAddress;
 	}
 
 	public User(int id, String name, String surname, Gender gender, LocalDate birthdate) {
@@ -64,17 +63,17 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public User(String name, String surname, Gender gender, LocalDate birthdate, Optional<String> workAddress, Optional<String> homeAddress) {
+	public User(String name, String surname, Gender gender, LocalDate birthdate, String workAddress, String homeAddress) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.birthdate = birthdate;
-		this.workAddress = workAddress.orElse(null);
-		this.homeAddress = homeAddress.orElse(null);
+		this.workAddress = workAddress;
+		this.homeAddress = homeAddress;
 	}
 
-	public Optional<Integer> getId() {
-		return Optional.ofNullable(id);
+	public Integer getId() {
+		return id;
 	}
 
 	public void setId(int id) {
@@ -113,25 +112,18 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public Optional<String> getWorkAddress() {
-		return Optional.ofNullable(workAddress);
-	}
-
-	public void setWorkAddress(Optional<String> workAddress) {
-		this.workAddress = workAddress.orElse(null);
+	public String getWorkAddress() {
+		return workAddress;
 	}
 
 	public void setWorkAddress(String workAddress) {
 		this.workAddress = workAddress;
 	}
 
-	public Optional<String> getHomeAddress() {
-		return Optional.ofNullable(homeAddress);
+	public String getHomeAddress() {
+		return homeAddress;
 	}
 
-	public void setHomeAddress(Optional<String> homeAddress) {
-		this.homeAddress = homeAddress.orElse(null);
-	}
 
 	public void setHomeAddress(String homeAddress) {
 		this.homeAddress = homeAddress;
