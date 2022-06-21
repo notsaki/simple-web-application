@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.dto.receive;
+package me.github.notsaki.userapplication.domain.entity.response;
 
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.HomeAddress;

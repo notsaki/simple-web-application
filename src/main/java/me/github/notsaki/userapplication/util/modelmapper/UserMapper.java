@@ -3,8 +3,8 @@ package me.github.notsaki.userapplication.util.modelmapper;
 import me.github.notsaki.userapplication.domain.model.HomeAddress;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.model.WorkAddress;
-import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
 package me.github.notsaki.userapplication.controller;
 
-import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.service.UserService;
-import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController("User Controller")
@@ -19,7 +19,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public ResponseUserDto create(@RequestBody ReceiveUserDto receiveUserDto) {
+	public ResponseUserDto create(@Valid @RequestBody ReceiveUserDto receiveUserDto) {
 		return this.userService.save(receiveUserDto);
 	}
 
