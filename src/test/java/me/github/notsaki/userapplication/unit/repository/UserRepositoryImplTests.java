@@ -6,6 +6,7 @@ import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -49,7 +50,7 @@ public class UserRepositoryImplTests {
 	}
 
 	@Test
-	public void onFindAllShouldReturnTheSameUsersAsInserted() {
+	public void onFindAllShouldReturnTheSameUsers() {
 		var users = ReceiveUserStub
 				.List()
 				.stream()
@@ -74,10 +75,7 @@ public class UserRepositoryImplTests {
 				.map(ReceiveUserDto::toUser)
 				.toList();
 
-		this.userRepository.save(users.get(0));
-		var rowsAffected = this.userRepository.deleteById(users.get(0).getId());
-
-		Assert.assertEquals(1, rowsAffected);
+		Assertions.assertDoesNotThrow(() -> this.userRepository.save(users.get(0)));
 	}
 
 	@Test

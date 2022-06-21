@@ -16,16 +16,12 @@ public class WorkAddress {
 	@Column
 	private String address;
 
-	@OneToOne(mappedBy = "workAddress")
-	private User user;
-
 	protected WorkAddress() {
 	}
 
-	public WorkAddress(int id, String address, User user) {
+	public WorkAddress(int id, String address) {
 		this.id = id;
 		this.address = address;
-		this.user = user;
 	}
 
 	public WorkAddress(@Nullable String address) {
@@ -48,25 +44,16 @@ public class WorkAddress {
 		this.address = address;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof WorkAddress)) return false;
 		WorkAddress that = (WorkAddress) o;
-		return id == that.id && address.equals(that.address) && user.equals(that.user);
+		return id == that.id && address.equals(that.address);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, address, user);
+		return Objects.hash(id, address);
 	}
 }

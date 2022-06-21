@@ -8,6 +8,6 @@ import java.util.List;
 @Repository
 public interface UserRepository {
     User save(User user);
-    int deleteById(int id);
+    void deleteById(int id);
     List<User> findAll();
 }

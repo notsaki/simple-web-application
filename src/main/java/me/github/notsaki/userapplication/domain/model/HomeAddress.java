@@ -16,9 +16,6 @@ public class HomeAddress {
 	@Column
 	private String address;
 
-	@OneToOne(mappedBy = "homeAddress")
-	private User user;
-
 	protected HomeAddress() {
 	}
 
@@ -47,24 +44,16 @@ public class HomeAddress {
 		this.address = address;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (!(o instanceof HomeAddress)) return false;
 		HomeAddress that = (HomeAddress) o;
-		return id == that.id && address.equals(that.address) && user.equals(that.user);
+		return id == that.id && address.equals(that.address);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, address, user);
+		return Objects.hash(id, address);
 	}
 }

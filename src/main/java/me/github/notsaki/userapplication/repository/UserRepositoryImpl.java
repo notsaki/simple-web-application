@@ -3,6 +3,7 @@ package me.github.notsaki.userapplication.repository;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -34,11 +35,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     @Transactional
-    public int deleteById(int id) {
-        return this.entityManager
-                .createQuery("DELETE FROM User u WHERE u.id = :id")
-                .setParameter("id", id)
-                .executeUpdate();
+    public void deleteById(int id) {
+        var user = this.entityManager.find(User.class, id);
+        entityManager.remove(user);
     }
 
     @Override

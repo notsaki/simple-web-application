@@ -22,8 +22,7 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public int deleteById(int id) {
-		return 1;
+	public void deleteById(int id) {
 	}
 
 	@Override

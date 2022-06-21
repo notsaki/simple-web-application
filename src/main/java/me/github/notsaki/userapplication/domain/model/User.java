@@ -29,12 +29,12 @@ public class User {
 	@Column(nullable = false)
 	private LocalDate birthdate;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "work_address_id", referencedColumnName = "id")
 	@Nullable
 	private WorkAddress workAddress = null;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "home_address_id", referencedColumnName = "id")
 	@Nullable
 	private HomeAddress homeAddress = null;
@@ -121,20 +121,21 @@ public class User {
 		return Optional.ofNullable(homeAddress);
 	}
 
-
 	public void setHomeAddress(HomeAddress homeAddress) {
 		this.homeAddress = homeAddress;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;		if (!(o instanceof User user)) return false;
-		return getId() == user.getId() && getName().equals(user.getName()) && getSurname().equals(user.getSurname()) && getGender() == user.getGender() && getBirthdate().equals(user.getBirthdate()) && Objects.equals(getWorkAddress(), user.getWorkAddress()) && Objects.equals(getHomeAddress(), user.getHomeAddress());
+		if (this == o) return true;
+		if (!(o instanceof User)) return false;
+		User user = (User) o;
+		return id == user.id && name.equals(user.name) && surname.equals(user.surname) && gender == user.gender && birthdate.equals(user.birthdate) && Objects.equals(workAddress, user.workAddress) && Objects.equals(homeAddress, user.homeAddress);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(getId(), getName(), getSurname(), getGender(), getBirthdate(), getWorkAddress(), getHomeAddress());
+		return Objects.hash(id, name, surname, gender, birthdate, workAddress, homeAddress);
 	}
 
 	public ResponseUserDto toResponse() {
