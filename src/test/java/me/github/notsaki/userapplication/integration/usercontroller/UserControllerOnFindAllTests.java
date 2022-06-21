@@ -34,7 +34,7 @@ public class UserControllerOnFindAllTests {
 	@Autowired
 	private UserController userController;
 
-	private List<ReceiveUserDto> receiveUsers = ReceiveUserStub.List();
+	private final List<ReceiveUserDto> receiveUsers = ReceiveUserStub.List();
 	private List<ReceiveUserDto> returnedUsersAsReceived;
 
 	@Before
@@ -44,7 +44,7 @@ public class UserControllerOnFindAllTests {
 				.map(user -> this.userController.create(user))
 				.toList();
 
-		this.returnedUsersAsReceived = UserMapper.fromUserList(users);
+		this.returnedUsersAsReceived = UserMapper.fromResponseListToReceive(users);
 	}
 
 	@Test

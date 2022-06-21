@@ -5,6 +5,7 @@ import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
+import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User save(ReceiveUserDto userDto) {
-		return userRepository.save(userDto.toUser());
+	public ResponseUserDto save(ReceiveUserDto userDto) {
+		return userRepository.save(userDto.toUser()).toResponse();
 	}
 
 	@Override
@@ -35,7 +36,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findAll() {
-		return this.userRepository.findAll();
+	public List<ResponseUserDto> findAll() {
+		return this.userRepository.findAll()
+				.stream()
+				.map(User::toResponse)
+				.toList();
 	}
 }

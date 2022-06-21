@@ -1,44 +1,48 @@
 package me.github.notsaki.userapplication.domain.model;
 
+import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Table(name = "users")
 public class User {
 	@Id
-	@GeneratedValue
-	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column
 	private int id;
 
-	@Column(name = "name", nullable = false)
+	@Column(nullable = false)
 	private String name;
 
-	@Column(name = "surname", nullable = false)
+	@Column(nullable = false)
 	private String surname;
 
 	@Enumerated
-	@Column(name = "gender", nullable = false)
+	@Column(nullable = false)
 	private Gender gender;
 
-	@Column(name = "birthdate", nullable = false)
+	@Column(nullable = false)
 	private LocalDate birthdate;
 
-	@Column(name = "work_address")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "work_address_id", referencedColumnName = "id")
 	@Nullable
-	private String workAddress = null;
+	private WorkAddress workAddress = null;
 
-	@Column(name = "home_address")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "home_address_id", referencedColumnName = "id")
 	@Nullable
-	private String homeAddress = null;
+	private HomeAddress homeAddress = null;
 
 	protected User() {
 	}
 
-	public User(int id, String name, String surname, Gender gender, LocalDate birthdate, @Nullable String workAddress, @Nullable String homeAddress) {
+	public User(int id, String name, String surname, Gender gender, LocalDate birthdate, @Nullable WorkAddress workAddress, @Nullable HomeAddress homeAddress) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -56,14 +60,7 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public User(String name, String surname, Gender gender, LocalDate birthdate) {
-		this.name = name;
-		this.surname = surname;
-		this.gender = gender;
-		this.birthdate = birthdate;
-	}
-
-	public User(String name, String surname, Gender gender, LocalDate birthdate, String workAddress, String homeAddress) {
+	public User(String name, String surname, Gender gender, LocalDate birthdate, @Nullable WorkAddress workAddress, @Nullable HomeAddress homeAddress) {
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
@@ -72,7 +69,7 @@ public class User {
 		this.homeAddress = homeAddress;
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -112,34 +109,43 @@ public class User {
 		this.birthdate = birthdate;
 	}
 
-	public String getWorkAddress() {
-		return workAddress;
+	public Optional<WorkAddress> getWorkAddress() {
+		return Optional.ofNullable(workAddress);
 	}
 
-	public void setWorkAddress(String workAddress) {
+	public void setWorkAddress(@Nullable WorkAddress workAddress) {
 		this.workAddress = workAddress;
 	}
 
-	public String getHomeAddress() {
-		return homeAddress;
+	public Optional<HomeAddress> getHomeAddress() {
+		return Optional.ofNullable(homeAddress);
 	}
 
 
-	public void setHomeAddress(String homeAddress) {
+	public void setHomeAddress(HomeAddress homeAddress) {
 		this.homeAddress = homeAddress;
 	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		User user = (User) o;
-		return id == user.id && name.equals(user.name) && surname.equals(user.surname) && gender == user.gender && birthdate.equals(user.birthdate) && Objects.equals(workAddress, user.workAddress) && Objects.equals(homeAddress, user.homeAddress);
+		if (this == o) return true;		if (!(o instanceof User user)) return false;
+		return getId() == user.getId() && getName().equals(user.getName()) && getSurname().equals(user.getSurname()) && getGender() == user.getGender() && getBirthdate().equals(user.getBirthdate()) && Objects.equals(getWorkAddress(), user.getWorkAddress()) && Objects.equals(getHomeAddress(), user.getHomeAddress());
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, surname, gender, birthdate, workAddress, homeAddress);
+		return Objects.hash(getId(), getName(), getSurname(), getGender(), getBirthdate(), getWorkAddress(), getHomeAddress());
 	}
 
+	public ResponseUserDto toResponse() {
+		return new ResponseUserDto(
+				this.getId(),
+				this.getName(),
+				this.getSurname(),
+				this.getGender(),
+				this.getBirthdate(),
+				this.getWorkAddress().map(WorkAddress::getAddress).orElse(null),
+				this.getHomeAddress().map(HomeAddress::getAddress).orElse(null)
+		);
+	}
 }

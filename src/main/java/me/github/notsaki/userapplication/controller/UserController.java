@@ -3,6 +3,7 @@ package me.github.notsaki.userapplication.controller;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class UserController {
 	}
 
 	@PostMapping
-	public User create(@RequestBody ReceiveUserDto receiveUserDto) {
+	public ResponseUserDto create(@RequestBody ReceiveUserDto receiveUserDto) {
 		return this.userService.save(receiveUserDto);
 	}
 
@@ -29,7 +30,7 @@ public class UserController {
 	}
 
 	@GetMapping
-	public List<User> findAll() {
+	public List<ResponseUserDto> findAll() {
 		return this.userService.findAll();
 	}
 }

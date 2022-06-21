@@ -6,6 +6,7 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.dto.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.dto.receive.ResponseUserDto;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,8 +34,8 @@ public class UserControllerOnCreateTests {
 	@Autowired
 	private UserController userController;
 
-	private ReceiveUserDto receiveUser = ReceiveUserStub.One();
-	private User user;
+	private final ReceiveUserDto receiveUser = ReceiveUserStub.One();
+	private ResponseUserDto user;
 
 	@Before
 	public void createUser() {
@@ -44,7 +45,7 @@ public class UserControllerOnCreateTests {
 	@Test
 	public void shouldReturnTheSameUser() {
 		var receiveUser = this.receiveUser.toUser();
-		receiveUser.setId(this.user.getId());
-		Assert.assertEquals(this.user, receiveUser);
+		receiveUser.setId(this.user.id());
+		Assert.assertEquals(this.user, receiveUser.toResponse());
 	}
 }

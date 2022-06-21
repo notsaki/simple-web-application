@@ -32,7 +32,7 @@ public class UserServiceImplTests {
 		var result = this.userService.save(user);
 
 		var receive = user.toUser();
-		receive.setId(result.getId());
-		Assert.assertEquals(result, receive);
+		receive.setId(result.id());
+		Assert.assertEquals(result, receive.toResponse());
 	}
 }
