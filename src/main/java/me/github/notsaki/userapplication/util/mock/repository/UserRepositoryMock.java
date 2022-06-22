@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.util.mock.repository;
 
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
@@ -25,7 +26,15 @@ public class UserRepositoryMock implements UserRepository {
 	}
 
 	@Override
-	public List<User> findAll() {
-		return UserStub.List();
+	public List<UserListItemDto> findAll() {
+		return UserStub.List()
+				.stream()
+				.map(User::toFullName)
+				.toList();
+	}
+
+	@Override
+	public User findById(int id) {
+		return UserStub.One();
 	}
 }

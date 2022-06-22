@@ -1,9 +1,9 @@
 package me.github.notsaki.userapplication.repository;
 
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -42,9 +42,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     @Transactional
-    public List<User> findAll() {
+    public List<UserListItemDto> findAll() {
         return this.entityManager
-                .createQuery("SELECT u FROM User u", User.class)
+                .createQuery("SELECT new me.github.notsaki.userapplication.domain.entity.response.UserListItemDto(u.id, u.name, u.surname) FROM User u", UserListItemDto.class)
                 .getResultList();
+    }
+
+    @Override
+    @Transactional
+    public User findById(int id) {
+        return this.entityManager.find(User.class, id);
     }
 }

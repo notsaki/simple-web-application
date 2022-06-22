@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.model.AppProfile;
@@ -26,10 +27,15 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public List<ResponseUserDto> findAll() {
+	public List<UserListItemDto> findAll() {
 		return UserStub.List()
 				.stream()
-				.map(User::toResponse)
+				.map(User::toFullName)
 				.toList();
+	}
+
+	@Override
+	public ResponseUserDto findById(int id) {
+		return UserStub.One().toResponse();
 	}
 }

@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.domain.model;
 
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -147,6 +148,14 @@ public class User {
 				this.getBirthdate(),
 				this.getWorkAddress().map(WorkAddress::getAddress).orElse(null),
 				this.getHomeAddress().map(HomeAddress::getAddress).orElse(null)
+		);
+	}
+
+	public UserListItemDto toFullName() {
+		return new UserListItemDto(
+				this.getId(),
+				this.getName(),
+				this.getSurname()
 		);
 	}
 }
