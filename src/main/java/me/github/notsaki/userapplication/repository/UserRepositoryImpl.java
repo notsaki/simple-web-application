@@ -46,6 +46,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
+    public Optional<User> update(User user) {
+        return Optional.ofNullable(this.entityManager.find(User.class, user.getId()))
+                .map(u -> this.entityManager.merge(user));
+    }
+
+    @Override
     public List<UserListItemDto> findAll() {
         return this.entityManager
                 .createQuery("""

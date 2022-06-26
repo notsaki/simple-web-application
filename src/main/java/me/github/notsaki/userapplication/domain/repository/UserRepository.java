@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface UserRepository {
     User save(User user);
     boolean deleteById(int id);
+    Optional<User> update(User user);
     List<UserListItemDto> findAll();
     Optional<User> findById(int id);
 }

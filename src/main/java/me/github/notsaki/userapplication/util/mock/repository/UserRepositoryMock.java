@@ -27,6 +27,11 @@ public class UserRepositoryMock implements UserRepository {
 	}
 
 	@Override
+	public Optional<User> update(User user) {
+		return Optional.of(user);
+	}
+
+	@Override
 	public List<UserListItemDto> findAll() {
 		return UserStub.List()
 				.stream()

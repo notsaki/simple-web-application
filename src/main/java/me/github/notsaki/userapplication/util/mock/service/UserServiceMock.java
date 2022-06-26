@@ -29,6 +29,11 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
+	public Optional<User> updateById(int id, ReceiveUserDto user) {
+		return Optional.of(UserStub.One());
+	}
+
+	@Override
 	public List<UserListItemDto> findAll() {
 		return UserStub.List()
 				.stream()

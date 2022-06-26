@@ -38,6 +38,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public Optional<User> updateById(int id, ReceiveUserDto user) {
+		var newUser = user.toUser();
+		newUser.setId(id);
+		return this.userRepository.update(newUser);
+	}
+
+	@Override
 	public List<UserListItemDto> findAll() {
 		return this.userRepository.findAll();
 	}
