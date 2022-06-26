@@ -1,10 +1,9 @@
-package me.github.notsaki.userapplication.advice;
+package me.github.notsaki.userapplication.controlleradvice;
 
-import me.github.notsaki.userapplication.domain.entity.ValidationInfo;
+import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -24,10 +23,10 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
 	) {
 		List<ValidationInfo> errors = exception
 				.getBindingResult()
-				.getAllErrors()
+				.getFieldErrors()
 				.stream()
 				.map(error -> {
-					String target = ((FieldError) error).getField();
+					String target = error.getField();
 					String message = error.getDefaultMessage();
 					return new ValidationInfo(target, message);
 				})

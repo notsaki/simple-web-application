@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.unit.service;
 
-import me.github.notsaki.userapplication.domain.model.AppProfile;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;

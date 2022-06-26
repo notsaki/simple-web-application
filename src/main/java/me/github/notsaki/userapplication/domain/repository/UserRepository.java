@@ -5,11 +5,12 @@ import me.github.notsaki.userapplication.domain.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository {
     User save(User user);
-    void deleteById(int id);
+    boolean deleteById(int id);
     List<UserListItemDto> findAll();
-    User findById(int id);
+    Optional<User> findById(int id);
 }

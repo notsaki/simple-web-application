@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.domain.model;
+package me.github.notsaki.userapplication.util;
 
 public interface AppProfile {
 	String IMPL = "impl";

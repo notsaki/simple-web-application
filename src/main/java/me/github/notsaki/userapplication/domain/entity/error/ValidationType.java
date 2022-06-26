@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.domain.entity;
+package me.github.notsaki.userapplication.domain.entity.error;
 
 public enum ValidationType {
 	LENGHT("lenght"),

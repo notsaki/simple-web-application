@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.domain.model.AppProfile;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -35,22 +36,34 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     @Transactional
-    public void deleteById(int id) {
-        var user = this.entityManager.find(User.class, id);
-        entityManager.remove(user);
+    public boolean deleteById(int id) {
+        return Optional.ofNullable(this.entityManager.find(User.class, id))
+                .map(user -> {
+                    this.entityManager.remove(user);
+                    return true;
+                })
+                .orElse(false);
     }
 
     @Override
-    @Transactional
     public List<UserListItemDto> findAll() {
         return this.entityManager
-                .createQuery("SELECT new me.github.notsaki.userapplication.domain.entity.response.UserListItemDto(u.id, u.name, u.surname) FROM User u", UserListItemDto.class)
+                .createQuery("""
+                        SELECT
+                            new me.github.notsaki.userapplication.domain.entity.response.UserListItemDto(
+                                u.id,
+                                u.name,
+                                u.surname
+                            )
+                        FROM User u
+                    """,
+                    UserListItemDto.class
+                )
                 .getResultList();
     }
 
     @Override
-    @Transactional
-    public User findById(int id) {
-        return this.entityManager.find(User.class, id);
+    public Optional<User> findById(int id) {
+        return Optional.ofNullable(this.entityManager.find(User.class, id));
     }
 }

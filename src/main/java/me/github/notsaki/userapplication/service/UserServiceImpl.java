@@ -2,7 +2,8 @@ package me.github.notsaki.userapplication.service;
 
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.domain.model.AppProfile;
+import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Profile(AppProfile.IMPL)
@@ -31,8 +33,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteById(int id) {
-		this.userRepository.deleteById(id);
+	public boolean deleteById(int id) {
+		return this.userRepository.deleteById(id);
 	}
 
 	@Override
@@ -41,7 +43,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseUserDto findById(int id) {
-		return this.userRepository.findById(id).toResponse();
+	public Optional<ResponseUserDto> findById(int id) {
+		return this.userRepository
+				.findById(id)
+				.map(User::toResponse);
 	}
 }

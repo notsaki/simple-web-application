@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.integration.usercontroller;
 
 import me.github.notsaki.userapplication.controller.UserController;
-import me.github.notsaki.userapplication.domain.model.AppProfile;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;

@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.util.mock.repository;
 
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.domain.model.AppProfile;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.UserStub;
@@ -22,7 +22,8 @@ public class UserRepositoryMock implements UserRepository {
 	}
 
 	@Override
-	public void deleteById(int id) {
+	public boolean deleteById(int id) {
+		return true;
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class UserRepositoryMock implements UserRepository {
 	}
 
 	@Override
-	public User findById(int id) {
-		return UserStub.One();
+	public Optional<User> findById(int id) {
+		return Optional.of(UserStub.One());
 	}
 }
