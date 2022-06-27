@@ -4,11 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +16,7 @@ import java.io.IOException;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
-public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationFilter extends OncePerRequestFilter {
 	private final AuthenticationManager authenticationManager;
 	private final TokenService tokenService;
 
@@ -25,31 +24,29 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 		this.authenticationManager = authenticationManager;
 		this.tokenService = tokenService;
 	}
-	@Override
-	public Authentication attemptAuthentication(
-			HttpServletRequest request,
-			HttpServletResponse response
-	) throws AuthenticationException {
-		try {
-			var credentials = new ObjectMapper().readValue(request.getInputStream(), Credentials.class);
-			var token = new UsernamePasswordAuthenticationToken(credentials.username(), credentials.password());
-			return authenticationManager.authenticate(token);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-	}
 
 	@Override
-	protected void successfulAuthentication(
+	protected void doFilterInternal(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			FilterChain chain,
-			Authentication authResult
+			FilterChain filterChain
 	) throws IOException {
-		var user = (User)authResult.getPrincipal();
-		var jwt = this.tokenService.generate(user, request.getRequestURI());
+		try {
+			var credentials = new ObjectMapper().readValue(request.getInputStream(), Credentials.class);
 
-		response.setContentType(APPLICATION_JSON_VALUE);
-		response.getWriter().write(new ObjectMapper().writeValueAsString(jwt));
+			var token = new UsernamePasswordAuthenticationToken(credentials.username(), credentials.password());
+
+			var authentication = authenticationManager.authenticate(token);
+
+			var user = (User)authentication.getPrincipal();
+			var jwt = this.tokenService.generate(user, request.getRequestURI());
+
+			response.setContentType(APPLICATION_JSON_VALUE);
+			response.getWriter().write(new ObjectMapper().writeValueAsString(jwt));
+		} catch (BadCredentialsException exception) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		} catch (IOException exception) {
+			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+		}
 	}
 }
