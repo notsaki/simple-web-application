@@ -16,6 +16,16 @@ public class CorsConfiguration {
 						.allowCredentials(true)
 						.allowedOrigins("http://localhost:3000/")
 						.allowedMethods("POST", "GET", "DELETE", "OPTIONS");
+
+				registry
+						.addMapping("/token")
+						.allowedOrigins("http://localhost:3000/")
+						.allowedMethods("POST");
+
+				registry
+						.addMapping("/login")
+						.allowedOrigins("http://localhost:3000/")
+						.allowedMethods("POST");
 			}
 		};
 	}
