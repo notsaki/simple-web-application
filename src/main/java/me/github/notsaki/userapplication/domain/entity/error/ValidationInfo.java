@@ -6,6 +6,9 @@ public class ValidationInfo {
 	private String targetLocation;
 	private String instructions;
 
+	public ValidationInfo() {
+	}
+
 	public ValidationInfo(String targetLocation, String instructions) {
 		this.targetLocation = targetLocation;
 		this.instructions = instructions;
