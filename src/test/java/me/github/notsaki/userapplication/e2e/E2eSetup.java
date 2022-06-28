@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
 import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
 import org.junit.runner.RunWith;
@@ -18,12 +19,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @SpringBootTest
 @AutoConfigureMockMvc
-public abstract class E2eBaseClass {
+public abstract class E2eSetup {
 
 	@Autowired
 	protected MockMvc mvc;
+	protected final ObjectMapper objectMapper;
 
-	protected final ObjectMapper objectMapper = new ObjectMapper();
+	public E2eSetup() {
+		this.objectMapper = new ObjectMapper();
+		this.objectMapper.registerModule(new JavaTimeModule());
+	}
 
 	public JwtToken login() throws Exception {
 		var body = this.objectMapper.writeValueAsString(new Credentials("admin", "admin"));

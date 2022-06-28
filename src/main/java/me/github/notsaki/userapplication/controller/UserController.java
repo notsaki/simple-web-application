@@ -38,10 +38,8 @@ public class UserController {
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public User updateById(
-			@PathVariable("id")
-			int id,
-			@Valid @RequestBody
-			ReceiveUserDto user
+			@PathVariable("id") int id,
+			@Valid @RequestBody ReceiveUserDto user
 	) throws RecordNotFoundException {
 		return this.userService
 				.updateById(id, user)

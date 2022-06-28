@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.unit.repository;
 
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
@@ -62,9 +63,14 @@ public class UserRepositoryImplTests {
 				.map(user -> this.userRepository.save(user))
 				.toList();
 
+		var saved = users
+				.stream()
+				.map(user -> new UserListItemDto(user.getId(), user.getName(), user.getSurname()))
+				.toList();
+
 		var result = this.userRepository.findAll();
 
-		Assert.assertEquals(result, generatedUsers);
+		Assert.assertEquals(result, saved);
 	}
 
 	@Test

@@ -1,7 +1,8 @@
-package me.github.notsaki.userapplication.e2e.security;
+package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
 import me.github.notsaki.userapplication.domain.entity.receive.RefreshToken;
-import me.github.notsaki.userapplication.e2e.E2eAuthBaseClass;
+import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -10,14 +11,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-public class SecurityControllerRefreshTests extends E2eAuthBaseClass {
-	private final String expiredToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Ii9sb2dpbiIsImV4cCI6MTY1NjM1NzMwMX0.ywhkbp_2BQM-kch1f5yNDb0-PF3DFKT7lXdPtlEcJ8g";
-
+public class SecurityControllerRefreshTests extends E2eAuthSetup {
+	private final String route = "/token";
 
 	public ResultActions refresh(String body) throws Exception {
 		return this.mvc
 				.perform(
-						post("/token")
+						post(this.route)
 								.contentType(MediaType.APPLICATION_JSON)
 								.content(body)
 				);
@@ -25,6 +25,8 @@ public class SecurityControllerRefreshTests extends E2eAuthBaseClass {
 
 	@Test
 	public void whenSendingValidRefreshToken_shouldReturnStatusOk() throws Exception {
+		this.jwt = this.login();
+
 		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.jwt.refresh_token()));
 
 		this.refresh(refreshToken)
@@ -35,11 +37,11 @@ public class SecurityControllerRefreshTests extends E2eAuthBaseClass {
 	}
 
 	@Test
-	public void whenSendingExpiredToken_shouldReturnUnauthorized() throws Exception {
+	public void whenSendingExpiredToken_shouldReturnForbidden() throws Exception {
 		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.expiredToken));
 
 		this.refresh(refreshToken)
-				.andExpect(status().isUnauthorized());
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
@@ -49,10 +51,10 @@ public class SecurityControllerRefreshTests extends E2eAuthBaseClass {
 	}
 
 	@Test
-	public void whenSendingInvalidToken_shouldReturnStatusUnauthorized() throws Exception {
+	public void whenSendingInvalidToken_shouldReturnStatusForbidden() throws Exception {
 		// TODO: Change API to return Unauthorized instead of Forbidden.
-		var body = this.objectMapper.writeValueAsString(new RefreshToken("eyJ01XAiOiJKV1QiLCJhbGciOiJIUzI2NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Ii9sb2dpbiIsImV4cCI6MTY1NjM1NzMwMX0.ywhkbp_2BQM-kch1f5yNDb5-PF3DFKT7lXdPtlecJ8g"));
+		var body = this.objectMapper.writeValueAsString(new RefreshToken(this.invalidToken));
 		this.refresh(body)
-				.andExpect(status().isUnauthorized());
+				.andExpect(status().isForbidden());
 	}
 }
