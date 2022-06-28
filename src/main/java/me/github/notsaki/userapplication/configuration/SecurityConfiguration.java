@@ -41,12 +41,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.cors().disable();
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/login/**", "/token/**").permitAll();
-		http.authorizeRequests().antMatchers("/user/**").authenticated();
+		http.authorizeRequests().antMatchers("/user/**").permitAll();
 		http.addFilterBefore(
-				new AuthenticationFilter(this.authenticationManagerBean(), this.tokenService),
+				new AuthenticationFilter(this.authenticationManagerBean()),
 				UsernamePasswordAuthenticationFilter.class
 		);
 		http.addFilterBefore(new AuthorizationFilter(this.tokenService), UsernamePasswordAuthenticationFilter.class);

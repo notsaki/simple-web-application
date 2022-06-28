@@ -45,6 +45,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
+		} else {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
 		}
 
 		filterChain.doFilter(request, response);

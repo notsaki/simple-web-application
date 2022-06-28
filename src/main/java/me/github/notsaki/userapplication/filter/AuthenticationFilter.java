@@ -15,22 +15,19 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+import java.util.Objects;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
 	private final AuthenticationManager authenticationManager;
-	private final TokenService tokenService;
 
-	public AuthenticationFilter(AuthenticationManager authenticationManager, TokenService tokenService) {
+	public AuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
-		this.tokenService = tokenService;
 	}
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return !"/login".equals(path);
+		return !"/login".equals(path) || !Objects.equals(request.getMethod(), "POST");
 	}
 
 	@Override

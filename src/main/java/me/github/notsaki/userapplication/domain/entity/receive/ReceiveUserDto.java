@@ -23,11 +23,9 @@ public record ReceiveUserDto(
 		@NotNull(message = ValidationMessage.notBlank)
 		@Past(message = ValidationMessage.datePast)
 		LocalDate birthdate,
-		@NotNull(message = ValidationMessage.notBlank)
 		@Size(min = 1, max = 128, message = ValidationMessage.addressLength)
 		@Nullable
 		String workAddress,
-		@NotNull(message = ValidationMessage.notBlank)
 		@Size(min = 1, max = 128, message = ValidationMessage.addressLength)
 		@Nullable
 		String homeAddress
