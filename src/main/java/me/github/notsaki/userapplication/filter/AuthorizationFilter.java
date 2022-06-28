@@ -37,7 +37,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 		if(header != null && header.startsWith(tokenPrefix)) {
 			try {
-				var username = this.tokenService.validate(tokenPrefix, header);
+				var username = this.tokenService.validateToken(tokenPrefix, header);
 				var authentication = new UsernamePasswordAuthenticationToken(username, null, List.of());
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);

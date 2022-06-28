@@ -24,18 +24,18 @@ public class TokenServiceImpl implements TokenService {
 		this.secret = secret;
 	}
 
-	public JwtToken generate(User principal, String issuer) {
+	public JwtToken generateToken(String username, String issuer) {
 		var algorithm = Algorithm.HMAC256(this.secret.getBytes());
 
 		var accessToken = JWT.create()
-				.withSubject(principal.getUsername())
+				.withSubject(username)
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
 				.withIssuer(issuer)
 				.sign(algorithm);
 
 
 		var refreshToken = JWT.create()
-				.withSubject(principal.getUsername())
+				.withSubject(username)
 				.withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 * 1000))
 				.withIssuer(issuer)
 				.sign(algorithm);
@@ -43,7 +43,7 @@ public class TokenServiceImpl implements TokenService {
 		return new JwtToken(accessToken, refreshToken);
 	}
 
-	public Optional<String> validate(String prefix, String token) {
+	public Optional<String> validateToken(String prefix, String token) {
 		try {
 			token = token.substring(prefix.length());
 			var algorithm = Algorithm.HMAC256(this.secret.getBytes());
