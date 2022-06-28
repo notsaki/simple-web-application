@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,6 +24,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	public AuthenticationFilter(AuthenticationManager authenticationManager, TokenService tokenService) {
 		this.authenticationManager = authenticationManager;
 		this.tokenService = tokenService;
+	}
+
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+		String path = request.getRequestURI();
+		return !"/login".equals(path);
 	}
 
 	@Override

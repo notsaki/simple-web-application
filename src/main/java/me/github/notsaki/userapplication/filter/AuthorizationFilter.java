@@ -21,6 +21,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	}
 
 	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) {
+		String path = request.getRequestURI();
+		return "/login".equals(path) || "/token".equals(path);
+	}
+
+	@Override
 	protected void doFilterInternal(
 			HttpServletRequest request,
 			HttpServletResponse response,
@@ -41,7 +47,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			} catch (Exception exception) {
-				response.sendError(HttpServletResponse.SC_FORBIDDEN);
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				return;
 			}
 		}
