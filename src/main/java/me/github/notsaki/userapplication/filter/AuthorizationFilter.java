@@ -23,7 +23,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return "/login".equals(path) || "/token".equals(path);
+		return "/login".equals(path);
 	}
 
 	@Override
@@ -32,11 +32,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 			HttpServletResponse response,
 			FilterChain filterChain
 	) throws ServletException, IOException {
-		if(request.getServletPath().equals("/login") || request.getServletPath().equals("/token")) {
-			filterChain.doFilter(request, response);
-			return;
-		}
-
 		var tokenPrefix = "Bearer ";
 		var header = request.getHeader(AUTHORIZATION);
 

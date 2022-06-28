@@ -50,7 +50,8 @@ public class SecurityControllerRefreshTests extends E2eAuthBaseClass {
 
 	@Test
 	public void whenSendingInvalidToken_shouldReturnStatusUnauthorized() throws Exception {
-		var body = this.objectMapper.writeValueAsString(new RefreshToken("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Ii9sb2dpbiIsImV4cCI6MTY1NjM1NzMwMX0.ywhkbp_2BQM-kch1f5yNDb5-PF3DFKT7lXdPtlecJ8g"));
+		// TODO: Change API to return Unauthorized instead of Forbidden.
+		var body = this.objectMapper.writeValueAsString(new RefreshToken("eyJ01XAiOiJKV1QiLCJhbGciOiJIUzI2NiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6Ii9sb2dpbiIsImV4cCI6MTY1NjM1NzMwMX0.ywhkbp_2BQM-kch1f5yNDb5-PF3DFKT7lXdPtlecJ8g"));
 		this.refresh(body)
 				.andExpect(status().isUnauthorized());
 	}

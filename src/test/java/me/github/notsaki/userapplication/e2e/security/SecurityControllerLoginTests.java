@@ -40,7 +40,7 @@ public class SecurityControllerLoginTests extends E2eBaseClass {
 	}
 
 	@Test
-	public void whenSendingInvalidPassword_shouldReturnStatusForbidden() throws Exception {
+	public void whenSendingInvalidPassword_shouldReturnStatusUnauthorized() throws Exception {
 		var body = this.objectMapper.writeValueAsString(new Credentials("admin",""));
 
 		this.login(body)
@@ -48,7 +48,7 @@ public class SecurityControllerLoginTests extends E2eBaseClass {
 	}
 
 	@Test
-	public void whenSendingInvalidUsername_shouldReturnStatusForbidden() throws Exception {
+	public void whenSendingInvalidUsername_shouldReturnStatusUnauthorized() throws Exception {
 		var body = this.objectMapper.writeValueAsString(new Credentials("","admin"));
 
 		this.login(body).andExpect(status().isUnauthorized());
