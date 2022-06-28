@@ -16,7 +16,8 @@ public class CorsConfiguration {
 						.allowedOrigins("http://localhost:3000")
 						.allowCredentials(true)
 						.allowedMethods("POST", "GET", "PATCH", "DELETE", "OPTIONS")
-						.allowedHeaders("*");
+						.allowedHeaders("*")
+						.maxAge(1728000);
 			}
 		};
 	}

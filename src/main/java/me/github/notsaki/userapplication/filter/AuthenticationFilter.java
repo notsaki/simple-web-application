@@ -27,7 +27,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return !"/login".equals(path) || !Objects.equals(request.getMethod(), "POST");
+		return !"/login".equals(path) || !request.getMethod().equals("POST");
 	}
 
 	@Override
