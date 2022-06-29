@@ -5,6 +5,7 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,12 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -26,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerFindByIdTests extends E2eSetup {
-    private final String route = "/user";
+    private final String route = Routes.user;
     private User createdUser;
 
     @Autowired

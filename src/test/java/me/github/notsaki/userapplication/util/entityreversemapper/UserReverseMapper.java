@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.util.modelmapper;
+package me.github.notsaki.userapplication.util.entityreversemapper;
 
 import me.github.notsaki.userapplication.domain.model.HomeAddress;
 import me.github.notsaki.userapplication.domain.model.User;
@@ -8,7 +8,7 @@ import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 
 import java.util.List;
 
-public class UserMapper {
+public class UserReverseMapper {
 	public static ReceiveUserDto fromUserToReceive(User user) {
 		var homeAddress = user.getHomeAddress().orElse(null);
 		var workAddress = user.getWorkAddress().orElse(null);
@@ -25,7 +25,7 @@ public class UserMapper {
 	public static List<ReceiveUserDto> fromUserListToReceive(List<User> users) {
 		return users
 				.stream()
-				.map(UserMapper::fromUserToReceive)
+				.map(UserReverseMapper::fromUserToReceive)
 				.toList();
 	}
 
@@ -44,7 +44,7 @@ public class UserMapper {
 	public static List<User> fromResponseListToUser(List<ResponseUserDto> users) {
 		return users
 				.stream()
-				.map(UserMapper::fromResponseToUser)
+				.map(UserReverseMapper::fromResponseToUser)
 				.toList();
 	}
 
@@ -62,7 +62,7 @@ public class UserMapper {
 	public static List<ReceiveUserDto> fromResponseListToReceive(List<ResponseUserDto> users) {
 		return users
 				.stream()
-				.map(UserMapper::fromResponseToReceive)
+				.map(UserReverseMapper::fromResponseToReceive)
 				.toList();
 	}
 }

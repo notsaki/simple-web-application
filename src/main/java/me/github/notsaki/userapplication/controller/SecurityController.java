@@ -3,6 +3,7 @@ package me.github.notsaki.userapplication.controller;
 import me.github.notsaki.userapplication.domain.entity.receive.RefreshToken;
 import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
 import me.github.notsaki.userapplication.domain.service.TokenService;
+import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,14 +24,14 @@ public class SecurityController {
 		this.userDetailsService = userDetailsService;
 	}
 
-	@PostMapping("/login")
+	@PostMapping(Routes.login)
 	@ResponseStatus(HttpStatus.CREATED)
 	public JwtToken login(HttpServletRequest request) {
 		var principal = request.getUserPrincipal();
-		return this.tokenService.generateToken(principal.getName(), "/login");
+		return this.tokenService.generateToken(principal.getName(), Routes.login);
 	}
 
-	@PostMapping("/token")
+	@PostMapping(Routes.refreshToken)
 	@ResponseStatus(HttpStatus.CREATED)
 	public JwtToken refresh(HttpServletRequest request, @RequestBody RefreshToken refreshToken) {
 		var user = this.tokenService

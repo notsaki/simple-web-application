@@ -7,9 +7,9 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.AppProfile;
-import me.github.notsaki.userapplication.util.modelmapper.UserMapper;
+import me.github.notsaki.userapplication.util.Routes;
+import me.github.notsaki.userapplication.util.entityreversemapper.UserReverseMapper;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
-import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerUpdateUserTests extends E2eSetup {
-    private final String route = "/user";
+    private final String route = Routes.user;
     private User createdUser;
 
     @Autowired
@@ -78,7 +78,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
-        Assert.assertEquals(UserMapper.fromResponseToReceive(receivedUser), userToUpdate);
+        Assert.assertEquals(UserReverseMapper.fromResponseToReceive(receivedUser), userToUpdate);
         Assert.assertEquals(dbUser, receivedUser);
 
         this.assertUpdatedInDb(receivedUser);

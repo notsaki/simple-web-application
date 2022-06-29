@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
 import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.util.Routes;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -35,7 +36,7 @@ public abstract class E2eSetup {
 
 		var content = this.mvc
 				.perform(
-						post("/login")
+						post(Routes.login)
 								.contentType(MediaType.APPLICATION_JSON)
 								.content(body)
 				)

@@ -2,6 +2,7 @@ package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
 import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
+import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -13,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 public class SecurityControllerLoginTests extends E2eSetup {
-	private final String route = "/login";
+	private final String route = Routes.login;
 
 	public ResultActions login(String body) throws Exception {
 		return this.mvc

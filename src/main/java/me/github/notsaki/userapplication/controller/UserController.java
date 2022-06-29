@@ -5,6 +5,7 @@ import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 import me.github.notsaki.userapplication.exception.RecordNotFoundException;
+import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController("User Controller")
-@RequestMapping("/user")
+@RequestMapping(Routes.user)
 public class UserController {
 	private final UserService userService;
 

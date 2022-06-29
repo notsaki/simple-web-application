@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.e2e.security.usercontroller;
 
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
+import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -10,7 +11,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class UserControllerUpdateByIdTests extends E2eAuthSetup {
-    private final String route = "/user";
+    private final String route = Routes.user;
 
     @Test
     public void sendingRequestWithoutToken_shouldReturnUnauthorized() throws Exception {

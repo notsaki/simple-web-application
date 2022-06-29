@@ -2,6 +2,7 @@ package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
 import me.github.notsaki.userapplication.domain.entity.receive.RefreshToken;
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
+import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -12,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 public class SecurityControllerRefreshTests extends E2eAuthSetup {
-	private final String route = "/token";
+	private final String route = Routes.refreshToken;
 
 	public ResultActions refresh(String body) throws Exception {
 		return this.mvc

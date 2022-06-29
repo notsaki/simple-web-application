@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.filter;
 
 import me.github.notsaki.userapplication.domain.service.TokenService;
+import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -23,7 +24,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return "/login".equals(path) || "/token".equals(path) || request.getMethod().equals("OPTIONS");
+		return Routes.login.equals(path) || Routes.refreshToken.equals(path) || request.getMethod().equals("OPTIONS");
 	}
 
 	@Override

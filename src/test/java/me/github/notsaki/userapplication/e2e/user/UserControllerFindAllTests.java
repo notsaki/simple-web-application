@@ -5,6 +5,7 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +22,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerFindAllTests extends E2eSetup {
-    private final String route = "/user";
+    private final String route = Routes.user;
     private List<User> createdUsers;
 
     @Autowired
