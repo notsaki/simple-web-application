@@ -30,14 +30,14 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.jwt.refresh_token()));
 
 		this.refresh(refreshToken)
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("access_token").exists())
 				.andExpect(jsonPath("refresh_token").exists());
 	}
 
 	@Test
-	public void whenSendingExpiredToken_shouldReturnForbidden() throws Exception {
+	public void whenSendingExpiredToken_shouldReturnUnauthorized() throws Exception {
 		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.expiredToken));
 
 		this.refresh(refreshToken)
@@ -51,7 +51,7 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 	}
 
 	@Test
-	public void whenSendingInvalidToken_shouldReturnStatusForbidden() throws Exception {
+	public void whenSendingInvalidToken_shouldReturnStatusUnauthorized() throws Exception {
 		// TODO: Change API to return Unauthorized instead of Forbidden.
 		var body = this.objectMapper.writeValueAsString(new RefreshToken(this.invalidToken));
 		this.refresh(body)

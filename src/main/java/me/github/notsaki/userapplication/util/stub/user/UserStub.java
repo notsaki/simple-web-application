@@ -7,14 +7,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserStub {
 	public static User One() {
-		var user = ReceiveUserStub.One().toUser();
+		var user = ReceiveUserStub.one().toUser();
 		user.setId(1);
 		return user;
 	}
 
-	public static List<User> List() {
+	public static List<User> list() {
 		AtomicInteger count = new AtomicInteger();
-		return ReceiveUserStub.List()
+		return ReceiveUserStub.list()
 				.stream()
 				.map(user -> {
 					var newUser = user.toUser();
@@ -23,8 +23,4 @@ public class UserStub {
 				})
 				.toList();
 	}
-
-
-
-
 }

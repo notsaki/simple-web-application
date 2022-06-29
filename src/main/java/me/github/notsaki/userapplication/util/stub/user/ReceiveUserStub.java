@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ReceiveUserStub {
-	public static ReceiveUserDto One() {
+	public static ReceiveUserDto one() {
 		return new ReceiveUserDto(
 				"Anna",
 				"Dimitriadou",
@@ -21,7 +21,18 @@ public class ReceiveUserStub {
 		);
 	}
 
-	public static List<ReceiveUserDto> List() {
+	public static ReceiveUserDto another() {
+		return new ReceiveUserDto(
+				"Olga",
+				"Panagiotidou",
+				Gender.FEMALE,
+				LocalDate.of(1996, Calendar.JULY, 15),
+				"28th of October 5, 67100, Xanthi",
+				"Skra 23, 67100, Xanthi"
+		);
+	}
+
+	public static List<ReceiveUserDto> list() {
 		return new ArrayList(
 				Arrays.asList(
 						new ReceiveUserDto(

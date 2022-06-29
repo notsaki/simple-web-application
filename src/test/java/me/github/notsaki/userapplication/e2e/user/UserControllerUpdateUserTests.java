@@ -1,7 +1,5 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.ValidationMessage;
-import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.Gender;
@@ -20,8 +18,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -58,20 +54,19 @@ public class UserControllerUpdateUserTests extends E2eSetup {
 
     @Before
     public void saveUser() {
-        this.createdUser = this.userRepository.save(UserStub.One());
+        this.createdUser = this.userRepository.save(ReceiveUserStub.one().toUser());
     }
 
     @Test
-    public void sendingRequestWithValidBody_shouldReturnOk() throws Exception {
-        var userToUpdate = this.createdUser;
-        userToUpdate.setName("Olga");
+    public void sendingRequestWithValidBody_shouldReturnOkAndUpdateTheUser() throws Exception {
+        var userToUpdate = ReceiveUserStub.another();
+        var user = this.objectMapper.writeValueAsString(userToUpdate);
 
-        var user = this.objectMapper.writeValueAsString(UserMapper.fromUserToReceive(userToUpdate));
         var token = this.login();
 
         var body = this.mvc
                 .perform(
-                        patch(this.route)
+                        patch(this.route + "/" + this.createdUser.getId())
                                 .header(AUTHORIZATION, "Bearer " + token.access_token())
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(user)
@@ -80,13 +75,157 @@ public class UserControllerUpdateUserTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var userToUpdateAsResponse = userToUpdate.toResponse();
         var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
-        Assert.assertEquals(userToUpdateAsResponse, dbUser);
-        Assert.assertEquals(receivedUser, dbUser);
+        Assert.assertEquals(UserMapper.fromResponseToReceive(receivedUser), userToUpdate);
+        Assert.assertEquals(dbUser, receivedUser);
 
         this.assertUpdatedInDb(receivedUser);
+    }
+
+    @Test
+    public void sendingInvalidBodyFormat_shouldReturnBadRequestAndNotUpdateAnyUser() throws Exception {
+        var token = this.login();
+
+        this.mvc
+                .perform(
+                        patch(this.route + "/" + this.createdUser.getId())
+                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content("invalid_body")
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("name").doesNotExist())
+                .andExpect(jsonPath("surname").doesNotExist())
+                .andExpect(jsonPath("gender").doesNotExist())
+                .andExpect(jsonPath("birthdate").doesNotExist())
+                .andExpect(jsonPath("workAddress").doesNotExist())
+                .andExpect(jsonPath("homeAddress").doesNotExist());
+
+        this.assertNotUpdatedInDb();
+    }
+
+    @Test
+    public void sendingMissingProperties_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
+        var obj = new ReceiveUserDto(
+                "",
+                "",
+                Gender.FEMALE,
+                LocalDate.now().plusDays(1),
+                "",
+                ""
+        );
+
+        var user = this.objectMapper.writer().writeValueAsString(obj);
+        var token = this.login();
+
+        this.mvc
+                .perform(
+                        patch(this.route + "/" + this.createdUser.getId())
+                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(user)
+                )
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("name").doesNotExist())
+                .andExpect(jsonPath("surname").doesNotExist())
+                .andExpect(jsonPath("gender").doesNotExist())
+                .andExpect(jsonPath("birthdate").doesNotExist())
+                .andExpect(jsonPath("workAddress").doesNotExist())
+                .andExpect(jsonPath("homeAddress").doesNotExist());
+
+        this.assertNotUpdatedInDb();
+    }
+
+    @Test
+    public void sendingInvalidGenderValue_shouldReturnBadRequestAndNotUpdateTheUser() throws Exception {
+        var stub = ReceiveUserStub.one();
+
+        var obj = Map.of(
+                "name", stub.name(),
+                "surname", stub.surname(),
+                "gender", "",
+                "birthdate", stub.birthdate(),
+                "workAddress", Objects.requireNonNull(stub.workAddress()),
+                "homeAddress", Objects.requireNonNull(stub.homeAddress())
+        );
+
+        var user = this.objectMapper.writer().writeValueAsString(obj);
+        var token = this.login();
+
+        this.mvc
+                .perform(
+                        patch(this.route + "/" + this.createdUser.getId())
+                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(user)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("name").doesNotExist())
+                .andExpect(jsonPath("surname").doesNotExist())
+                .andExpect(jsonPath("gender").doesNotExist())
+                .andExpect(jsonPath("birthdate").doesNotExist())
+                .andExpect(jsonPath("workAddress").doesNotExist())
+                .andExpect(jsonPath("homeAddress").doesNotExist());
+
+        this.assertNotUpdatedInDb();
+    }
+
+    @Test
+    public void updatingNonExistentUser_shouldReturnNotFoundAndNotUpdateTheUser() throws Exception {
+        var stub = ReceiveUserStub.one();
+
+        var user = this.objectMapper.writer().writeValueAsString(stub);
+        var token = this.login();
+
+        this.mvc
+                .perform(
+                        patch(this.route + "/" + 0)
+                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(user)
+                )
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("name").doesNotExist())
+                .andExpect(jsonPath("surname").doesNotExist())
+                .andExpect(jsonPath("gender").doesNotExist())
+                .andExpect(jsonPath("birthdate").doesNotExist())
+                .andExpect(jsonPath("workAddress").doesNotExist())
+                .andExpect(jsonPath("homeAddress").doesNotExist());
+
+        this.assertNotUpdatedInDb();
+    }
+
+    @Test
+    public void updatingNonExistentUserWithInvalidBody_shouldReturnUnprocessableEntityAndNotUpdateTheUser() throws Exception {
+        var obj = new ReceiveUserDto(
+                "",
+                "",
+                Gender.FEMALE,
+                LocalDate.now().plusDays(1),
+                "",
+                ""
+        );
+
+        var user = this.objectMapper.writer().writeValueAsString(obj);
+        var token = this.login();
+
+        this.mvc
+                .perform(
+                        patch(this.route + "/" + 0)
+                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(user)
+                )
+                .andExpect(status().isUnprocessableEntity())
+                .andExpect(jsonPath("name").doesNotExist())
+                .andExpect(jsonPath("surname").doesNotExist())
+                .andExpect(jsonPath("gender").doesNotExist())
+                .andExpect(jsonPath("birthdate").doesNotExist())
+                .andExpect(jsonPath("workAddress").doesNotExist())
+                .andExpect(jsonPath("homeAddress").doesNotExist());
+
+        this.assertNotUpdatedInDb();
     }
 }

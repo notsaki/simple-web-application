@@ -16,31 +16,31 @@ public class UserControllerWithoutBodyRequestTests extends E2eAuthSetup {
     }
 
     @Test
-    public void sendingRequestWithoutToken_shouldReturnForbidden() throws Exception {
+    public void sendingRequestWithoutToken_shouldReturnUnauthorized() throws Exception {
         this.mvc
                 .perform(
                         this.method.operation(this.route)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void sendingRequestWithInvalidToken_shouldReturnForbidden() throws Exception {
+    public void sendingRequestWithInvalidToken_shouldReturnUnauthorized() throws Exception {
         this.mvc
                 .perform(
                         this.method.operation(this.route)
                                 .header(AUTHORIZATION, this.invalidToken)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void sendingRequestWithExpiredToken_shouldReturnForbidden() throws Exception {
+    public void sendingRequestWithExpiredToken_shouldReturnUnauthorized() throws Exception {
         this.mvc
                 .perform(
                         this.method.operation(this.route)
                                 .header(AUTHORIZATION, this.expiredToken)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 }

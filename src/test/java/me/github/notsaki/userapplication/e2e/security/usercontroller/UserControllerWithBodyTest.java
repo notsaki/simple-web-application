@@ -4,7 +4,6 @@ import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,8 +19,8 @@ public class UserControllerWithBodyTest extends E2eAuthSetup {
     }
 
     @Test
-    public void sendingRequestWithoutToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.One());
+    public void sendingRequestWithoutToken_shouldReturnUnauthorized() throws Exception {
+        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
 
         this.mvc
                 .perform(
@@ -29,12 +28,12 @@ public class UserControllerWithBodyTest extends E2eAuthSetup {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(user)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void sendingRequestWithInvalidToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.One());
+    public void sendingRequestWithInvalidToken_shouldReturnUnauthorized() throws Exception {
+        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
 
         this.mvc
                 .perform(
@@ -43,12 +42,12 @@ public class UserControllerWithBodyTest extends E2eAuthSetup {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(user)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
-    public void sendingRequestWithExpiredToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.One());
+    public void sendingRequestWithExpiredToken_shouldReturnUnauthorized() throws Exception {
+        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
 
         this.mvc
                 .perform(
@@ -57,6 +56,6 @@ public class UserControllerWithBodyTest extends E2eAuthSetup {
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(user)
                 )
-                .andExpect(status().isForbidden());
+                .andExpect(status().isUnauthorized());
     }
 }

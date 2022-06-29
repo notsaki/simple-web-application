@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface UserService {
 	public ResponseUserDto save(ReceiveUserDto userDto);
 	public boolean deleteById(int id);
-	Optional<User> updateById(int id, ReceiveUserDto user);
+	Optional<ResponseUserDto> updateById(int id, ReceiveUserDto user);
 	public List<UserListItemDto> findAll();
 	public Optional<ResponseUserDto> findById(int id);
 }

@@ -38,7 +38,7 @@ public class UserController {
 	@PatchMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
-	public User updateById(
+	public ResponseUserDto updateById(
 			@PathVariable("id") int id,
 			@Valid @RequestBody ReceiveUserDto user
 	) throws RecordNotFoundException {

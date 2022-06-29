@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.unit.repository;
+package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
@@ -26,7 +26,7 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onSaveShouldReturnTheSameUser() {
-		var user = ReceiveUserStub.One().toUser();
+		var user = ReceiveUserStub.one().toUser();
 		var result = this.userRepository.save(user);
 
 		Assert.assertEquals(result, user);
@@ -35,7 +35,7 @@ public class UserRepositoryImplTests {
 	@Test
 	public void onFindAllShouldReturnTheSameAmountUsers() {
 		var users = ReceiveUserStub
-				.List()
+				.list()
 				.stream()
 				.map(ReceiveUserDto::toUser)
 				.toList();
@@ -53,7 +53,7 @@ public class UserRepositoryImplTests {
 	@Test
 	public void onFindAllShouldReturnTheSameUsers() {
 		var users = ReceiveUserStub
-				.List()
+				.list()
 				.stream()
 				.map(ReceiveUserDto::toUser)
 				.toList();
@@ -76,7 +76,7 @@ public class UserRepositoryImplTests {
 	@Test
 	public void onDeleteShouldReturnOneRowAffected() {
 		var users = ReceiveUserStub
-				.List()
+				.list()
 				.stream()
 				.map(ReceiveUserDto::toUser)
 				.toList();
@@ -86,7 +86,7 @@ public class UserRepositoryImplTests {
 
 	@Test
 	public void onDeleteUserShouldNotExist() {
-		var user = ReceiveUserStub.One().toUser();
+		var user = ReceiveUserStub.one().toUser();
 
 		var savedUser = this.userRepository.save(user);
 		this.userRepository.deleteById(savedUser.getId());

@@ -29,7 +29,7 @@ public class SecurityControllerLoginTests extends E2eSetup {
 		var body = this.objectMapper.writeValueAsString(new Credentials("admin","admin"));
 
 		this.login(body)
-				.andExpect(status().isOk())
+				.andExpect(status().isCreated())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("access_token").exists())
 				.andExpect(jsonPath("refresh_token").exists());
@@ -38,7 +38,7 @@ public class SecurityControllerLoginTests extends E2eSetup {
 	@Test
 	public void whenSendingInvalidBody_shouldReturnStatusBadRequest() throws Exception {
 		this.login("random_body")
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isUnauthorized());
 	}
 
 	@Test

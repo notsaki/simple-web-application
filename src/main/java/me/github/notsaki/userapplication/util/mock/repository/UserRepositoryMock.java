@@ -33,7 +33,7 @@ public class UserRepositoryMock implements UserRepository {
 
 	@Override
 	public List<UserListItemDto> findAll() {
-		return UserStub.List()
+		return UserStub.list()
 				.stream()
 				.map(User::toFullName)
 				.toList();

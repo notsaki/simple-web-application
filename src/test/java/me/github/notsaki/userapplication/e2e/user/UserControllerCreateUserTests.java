@@ -8,6 +8,7 @@ import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.util.modelmapper.UserMapper;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithValidBody_shouldReturnCreated() throws Exception {
-        var userStub = ReceiveUserStub.One();
+        var userStub = ReceiveUserStub.one();
         var user = this.objectMapper.writeValueAsString(userStub);
         var token = this.login();
 
@@ -53,17 +54,12 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("name").value(userStub.name()))
-                .andExpect(jsonPath("surname").value(userStub.surname()))
-                .andExpect(jsonPath("gender").value(userStub.gender().name()))
-                .andExpect(jsonPath("birthdate").value(userStub.birthdate().toString()))
-                .andExpect(jsonPath("workAddress").value(userStub.workAddress()))
-                .andExpect(jsonPath("homeAddress").value(userStub.homeAddress()))
                 .andReturn();
 
         var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
+        Assert.assertEquals(userStub, UserMapper.fromResponseToReceive(receivedUser));
         Assert.assertEquals(receivedUser, dbUser);
     }
 
@@ -109,8 +105,8 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 .andExpect(jsonPath("workAddress").doesNotExist())
                 .andExpect(jsonPath("homeAddress").doesNotExist())
                 // TODO: Find a more elegant way to test.
-                .andExpect(jsonPath("$[*].instructions").value(containsInAnyOrder(ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank)))
-                .andExpect(jsonPath("$[*].targetLocation").value(containsInAnyOrder("name", "surname", "gender", "birthdate", "workAddress", "homeAddress")));
+                .andExpect(jsonPath("$[*].instructions").value(containsInAnyOrder(ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank)))
+                .andExpect(jsonPath("$[*].targetLocation").value(containsInAnyOrder("name", "surname", "gender", "birthdate")));
 
         this.assertEmptyDb();
     }
@@ -171,7 +167,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
 
     @Test
     public void sendingInvalidGenderValue_shouldReturnBadRequestAndNotSaveAnyUser() throws Exception {
-        var stub = ReceiveUserStub.One();
+        var stub = ReceiveUserStub.one();
 
         var obj = Map.of(
                 "name", stub.name(),

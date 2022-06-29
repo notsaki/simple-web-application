@@ -29,13 +29,13 @@ public class UserServiceMock implements UserService {
 	}
 
 	@Override
-	public Optional<User> updateById(int id, ReceiveUserDto user) {
-		return Optional.of(UserStub.One());
+	public Optional<ResponseUserDto> updateById(int id, ReceiveUserDto user) {
+		return Optional.of(UserStub.One()).map(User::toResponse);
 	}
 
 	@Override
 	public List<UserListItemDto> findAll() {
-		return UserStub.List()
+		return UserStub.list()
 				.stream()
 				.map(User::toFullName)
 				.toList();
