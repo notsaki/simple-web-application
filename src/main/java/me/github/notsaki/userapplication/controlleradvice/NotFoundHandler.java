@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.controlleradvice;
 
 import me.github.notsaki.userapplication.domain.entity.error.GenericError;
+import me.github.notsaki.userapplication.entity.error.GenericErrorEntity;
 import me.github.notsaki.userapplication.exception.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,6 +24,6 @@ public class NotFoundHandler {
 	@ResponseBody
 	public GenericError<Object> handleRecordNotFound(RecordNotFoundException exception) {
 		var context = exception.getContext();
-		return new GenericError<>(context);
+		return new GenericErrorEntity<>(context);
 	}
 }

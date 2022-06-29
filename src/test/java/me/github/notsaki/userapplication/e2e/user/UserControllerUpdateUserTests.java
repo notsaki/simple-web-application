@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
+import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
+import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
@@ -41,7 +41,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         Assert.assertEquals(user, this.createdUser);
     }
 
-    private void assertUpdatedInDb(ResponseUserDto response) {
+    private void assertUpdatedInDb(ResponseUserDtoEntity response) {
         var user = this.userRepository
                 .findById(this.createdUser.getId())
                 .orElseThrow()
@@ -73,7 +73,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
         Assert.assertEquals(UserReverseMapper.fromResponseToReceive(receivedUser), userToUpdate);
@@ -106,7 +106,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
 
     @Test
     public void sendingMissingProperties_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
-        var obj = new ReceiveUserDto(
+        var obj = new ReceiveUserDtoEntity(
                 "",
                 "",
                 Gender.FEMALE,
@@ -197,7 +197,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
 
     @Test
     public void updatingNonExistentUserWithInvalidBody_shouldReturnUnprocessableEntityAndNotUpdateTheUser() throws Exception {
-        var obj = new ReceiveUserDto(
+        var obj = new ReceiveUserDtoEntity(
                 "",
                 "",
                 Gender.FEMALE,

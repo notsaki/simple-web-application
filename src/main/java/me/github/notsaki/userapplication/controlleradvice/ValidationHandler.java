@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.controlleradvice;
 
 import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
+import me.github.notsaki.userapplication.entity.error.ValidationInfoEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +28,14 @@ public class ValidationHandler extends ResponseEntityExceptionHandler {
 			HttpStatus status,
 			WebRequest request
 	) {
-		List<ValidationInfo> errors = exception
+		List<ValidationInfoEntity> errors = exception
 				.getBindingResult()
 				.getFieldErrors()
 				.stream()
 				.map(error -> {
 					String target = error.getField();
 					String message = error.getDefaultMessage();
-					return new ValidationInfo(target, message);
+					return new ValidationInfoEntity(target, message);
 				})
 				.toList();
 

@@ -1,7 +1,8 @@
 package me.github.notsaki.userapplication.controller;
 
-import me.github.notsaki.userapplication.domain.entity.receive.RefreshToken;
 import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.receive.RefreshTokenEntity;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.http.HttpStatus;
@@ -48,7 +49,7 @@ public class SecurityController {
 	 */
 	@PostMapping(Routes.refreshToken)
 	@ResponseStatus(HttpStatus.CREATED)
-	public JwtToken refresh(HttpServletRequest request, @RequestBody RefreshToken refreshToken) {
+	public JwtToken refresh(HttpServletRequest request, @RequestBody RefreshTokenEntity refreshToken) {
 		var user = this.tokenService
 				.validateToken("", refreshToken.refreshToken())
 				.orElseThrow(() -> new UsernameNotFoundException("User not found."));

@@ -2,8 +2,8 @@ package me.github.notsaki.userapplication.e2e.user;
 
 import me.github.notsaki.userapplication.domain.entity.ValidationMessage;
 import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
-import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
+import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
+import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
@@ -57,7 +57,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
         Assert.assertEquals(userStub, UserReverseMapper.fromResponseToReceive(receivedUser));
@@ -123,7 +123,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
 
     @Test
     public void sendingInvalidBodyFormatValues_shouldReturnUnprocessableAndNotSaveAnyUser() throws Exception {
-        var obj = new ReceiveUserDto(
+        var obj = new ReceiveUserDtoEntity(
                 "",
                 "",
                 Gender.FEMALE,

@@ -2,13 +2,12 @@ package me.github.notsaki.userapplication.service;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.util.AppProfile;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -24,7 +23,7 @@ public class TokenServiceImpl implements TokenService {
 		this.secret = secret;
 	}
 
-	public JwtToken generateToken(String username, String issuer) {
+	public JwtTokenEntity generateToken(String username, String issuer) {
 		var algorithm = Algorithm.HMAC256(this.secret.getBytes());
 
 		var accessToken = JWT.create()
@@ -40,7 +39,7 @@ public class TokenServiceImpl implements TokenService {
 				.withIssuer(issuer)
 				.sign(algorithm);
 
-		return new JwtToken(accessToken, refreshToken);
+		return new JwtTokenEntity(accessToken, refreshToken);
 	}
 
 	public Optional<String> validateToken(String prefix, String token) {

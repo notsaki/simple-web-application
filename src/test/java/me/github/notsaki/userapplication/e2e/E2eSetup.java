@@ -2,8 +2,8 @@ package me.github.notsaki.userapplication.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
-import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.receive.CredentialsEntity;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +31,8 @@ public abstract class E2eSetup {
 		this.objectMapper.registerModule(new JavaTimeModule());
 	}
 
-	public JwtToken login() throws Exception {
-		var body = this.objectMapper.writeValueAsString(new Credentials("admin", "admin"));
+	public JwtTokenEntity login() throws Exception {
+		var body = this.objectMapper.writeValueAsString(new CredentialsEntity("admin", "admin"));
 
 		var content = this.mvc
 				.perform(
@@ -44,6 +44,6 @@ public abstract class E2eSetup {
 				.getResponse()
 				.getContentAsString();
 
-		return this.objectMapper.readValue(content, JwtToken.class);
+		return this.objectMapper.readValue(content, JwtTokenEntity.class);
 	}
 }

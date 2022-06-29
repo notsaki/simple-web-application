@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.service;
 
 import me.github.notsaki.userapplication.domain.model.Admin;
+import me.github.notsaki.userapplication.model.AdminModel;
 import me.github.notsaki.userapplication.domain.repository.AdminRepository;
 import me.github.notsaki.userapplication.domain.service.AdminService;
 import me.github.notsaki.userapplication.util.AppProfile;

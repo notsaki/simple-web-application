@@ -1,9 +1,8 @@
 package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
-import me.github.notsaki.userapplication.domain.entity.receive.RefreshToken;
+import me.github.notsaki.userapplication.entity.receive.RefreshTokenEntity;
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
 import me.github.notsaki.userapplication.util.Routes;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,7 +27,7 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 	public void whenSendingValidRefreshToken_shouldReturnStatusOk() throws Exception {
 		this.jwt = this.login();
 
-		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.jwt.refresh_token()));
+		var refreshToken = this.objectMapper.writeValueAsString(new RefreshTokenEntity(this.jwt.refresh_token()));
 
 		this.refresh(refreshToken)
 				.andExpect(status().isCreated())
@@ -39,7 +38,7 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 
 	@Test
 	public void whenSendingExpiredToken_shouldReturnUnauthorized() throws Exception {
-		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.expiredToken));
+		var refreshToken = this.objectMapper.writeValueAsString(new RefreshTokenEntity(this.expiredToken));
 
 		this.refresh(refreshToken)
 				.andExpect(status().isForbidden())
@@ -58,7 +57,7 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 	@Test
 	public void whenSendingInvalidToken_shouldReturnStatusUnauthorized() throws Exception {
 		// TODO: Change API to return Unauthorized instead of Forbidden.
-		var body = this.objectMapper.writeValueAsString(new RefreshToken(this.invalidToken));
+		var body = this.objectMapper.writeValueAsString(new RefreshTokenEntity(this.invalidToken));
 		this.refresh(body)
 				.andExpect(status().isForbidden())
 				.andExpect(jsonPath("access_token").doesNotExist())

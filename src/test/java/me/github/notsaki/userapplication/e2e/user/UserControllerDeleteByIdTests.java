@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.e2e.user;
 
 import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.model.UserModel;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.AppProfile;

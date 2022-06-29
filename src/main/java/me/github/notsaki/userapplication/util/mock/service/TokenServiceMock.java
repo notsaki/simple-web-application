@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
-import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Service
@@ -17,7 +16,7 @@ import java.util.Optional;
 @Profile(AppProfile.MOCK)
 public class TokenServiceMock implements TokenService {
 	@Override
-	public JwtToken generateToken(String username, String issuer) {
+	public JwtTokenEntity generateToken(String username, String issuer) {
 		return TokenStub.One();
 	}
 

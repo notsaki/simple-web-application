@@ -1,8 +1,9 @@
 package me.github.notsaki.userapplication.util.mock.repository;
 
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.entity.response.UserListItemDtoEntity;
 import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.springframework.beans.factory.annotation.Qualifier;

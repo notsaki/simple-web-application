@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
+import me.github.notsaki.userapplication.entity.response.UserListItemDtoEntity;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
@@ -52,7 +52,7 @@ public class UserControllerFindAllTests extends E2eSetup {
                 .andReturn();
 
         var receivedUser = Arrays
-                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), UserListItemDto[].class))
+                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), UserListItemDtoEntity[].class))
                 .toList();
 
         var savedUsers = this.createdUsers

@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.configuration;
 
-import me.github.notsaki.userapplication.domain.model.Admin;
+import me.github.notsaki.userapplication.model.AdminModel;
 import me.github.notsaki.userapplication.domain.service.AdminService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +22,6 @@ public class ApplicationConfiguration {
 			@Value("${admin.username}") String username,
 			@Value("${admin.password}") String password
 	) {
-		return args -> adminService.save(new Admin(username, password));
+		return args -> adminService.save(new AdminModel(username, password));
 	}
 }

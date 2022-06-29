@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
+import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
@@ -44,7 +44,7 @@ public class UserControllerFindByIdTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
 
         Assert.assertEquals(this.createdUser.toResponse(), receivedUser);
     }

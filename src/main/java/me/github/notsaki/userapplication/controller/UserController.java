@@ -1,9 +1,10 @@
 package me.github.notsaki.userapplication.controller;
 
-import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
+import me.github.notsaki.userapplication.domain.service.UserService;
+import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.exception.RecordNotFoundException;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.http.HttpStatus;
@@ -60,7 +61,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseUserDto updateById(
 			@PathVariable("id") int id,
-			@Valid @RequestBody ReceiveUserDto user
+			@Valid @RequestBody ReceiveUserDtoEntity user
 	) throws RecordNotFoundException {
 		return this.userService
 				.updateById(id, user)

@@ -1,8 +1,9 @@
 package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.model.UserModel;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
@@ -37,7 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     @Transactional
     public boolean deleteById(int id) {
-        return Optional.ofNullable(this.entityManager.find(User.class, id))
+        return Optional.ofNullable(this.entityManager.find(UserModel.class, id))
                 .map(user -> {
                     this.entityManager.remove(user);
                     return true;
@@ -48,7 +49,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     @Transactional
     public Optional<User> update(User user) {
-        return Optional.ofNullable(this.entityManager.find(User.class, user.getId()))
+        return Optional.ofNullable(this.entityManager.find(UserModel.class, user.getId()))
                 .map(u -> this.entityManager.merge(user));
     }
 
@@ -57,20 +58,20 @@ public class UserRepositoryImpl implements UserRepository {
         return this.entityManager
                 .createQuery("""
                         SELECT
-                            new me.github.notsaki.userapplication.domain.entity.response.UserListItemDto(
+                            new me.github.notsaki.userapplication.entity.response.UserListItemDtoEntity(
                                 u.id,
                                 u.name,
                                 u.surname
                             )
-                        FROM User u
+                        FROM UserModel u
                     """,
-                    UserListItemDto.class
+                        UserListItemDto.class
                 )
                 .getResultList();
     }
 
     @Override
     public Optional<User> findById(int id) {
-        return Optional.ofNullable(this.entityManager.find(User.class, id));
+        return Optional.ofNullable(this.entityManager.find(UserModel.class, id));
     }
 }

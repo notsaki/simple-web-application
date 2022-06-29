@@ -1,9 +1,9 @@
 package me.github.notsaki.userapplication.util.stub.token;
 
-import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 
 public class TokenStub {
-	public static JwtToken One() {
-		return new JwtToken("token", "refresh");
+	public static JwtTokenEntity One() {
+		return new JwtTokenEntity("token", "refresh");
 	}
 }

@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
 import me.github.notsaki.userapplication.domain.model.Admin;
+import me.github.notsaki.userapplication.model.AdminModel;
 import me.github.notsaki.userapplication.domain.service.AdminService;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;

@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import me.github.notsaki.userapplication.domain.entity.receive.Credentials;
+import me.github.notsaki.userapplication.entity.receive.CredentialsEntity;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,7 +43,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 			FilterChain filterChain
 	) throws IOException, ServletException {
 		try {
-			var credentials = new ObjectMapper().readValue(request.getInputStream(), Credentials.class);
+			var credentials = new ObjectMapper().readValue(request.getInputStream(), CredentialsEntity.class);
 			var token = new UsernamePasswordAuthenticationToken(credentials.username(), credentials.password());
 
 			var authentication = authenticationManager.authenticate(token);

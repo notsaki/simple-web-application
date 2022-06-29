@@ -1,11 +1,11 @@
 package me.github.notsaki.userapplication.domain.service;
 
-import me.github.notsaki.userapplication.domain.entity.response.JwtToken;
+import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
 
 import java.util.Optional;
 
 public interface TokenService {
-	JwtToken generateToken(String username, String issuer);
+	JwtTokenEntity generateToken(String username, String issuer);
 
 	/**
 	 * Decode and validate JWT token.

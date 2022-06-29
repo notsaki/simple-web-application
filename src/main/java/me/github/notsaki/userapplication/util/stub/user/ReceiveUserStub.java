@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ReceiveUserStub {
 	public static ReceiveUserDto one() {
-		return new ReceiveUserDto(
+		return new ReceiveUserDtoEntity(
 				"Anna",
 				"Dimitriadou",
 				Gender.FEMALE,
@@ -22,7 +23,7 @@ public class ReceiveUserStub {
 	}
 
 	public static ReceiveUserDto another() {
-		return new ReceiveUserDto(
+		return new ReceiveUserDtoEntity(
 				"Olga",
 				"Panagiotidou",
 				Gender.FEMALE,
@@ -35,7 +36,7 @@ public class ReceiveUserStub {
 	public static List<ReceiveUserDto> list() {
 		return new ArrayList(
 				Arrays.asList(
-						new ReceiveUserDto(
+						new ReceiveUserDtoEntity(
 								"Pantelis",
 								"Anastasiadis",
 								Gender.MALE,
@@ -43,7 +44,7 @@ public class ReceiveUserStub {
 								"Skra 23, 67100, Xanthi",
 								null
 						),
-						new ReceiveUserDto(
+						new ReceiveUserDtoEntity(
 								"Anna",
 								"Palaiokosta",
 								Gender.FEMALE,
@@ -51,7 +52,7 @@ public class ReceiveUserStub {
 								null,
 								null
 						),
-						new ReceiveUserDto(
+						new ReceiveUserDtoEntity(
 								"Panagiotis",
 								"Sardatselis",
 								Gender.MALE,

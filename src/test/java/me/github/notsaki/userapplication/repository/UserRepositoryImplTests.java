@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
+import me.github.notsaki.userapplication.entity.response.UserListItemDtoEntity;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
@@ -65,7 +65,7 @@ public class UserRepositoryImplTests {
 
 		var saved = users
 				.stream()
-				.map(user -> new UserListItemDto(user.getId(), user.getName(), user.getSurname()))
+				.map(user -> new UserListItemDtoEntity(user.getId(), user.getName(), user.getSurname()))
 				.toList();
 
 		var result = this.userRepository.findAll();

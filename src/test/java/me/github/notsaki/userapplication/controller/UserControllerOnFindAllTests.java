@@ -1,9 +1,10 @@
 package me.github.notsaki.userapplication.controller;
 
+import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
-import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.util.entityreversemapper.UserReverseMapper;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;

@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.model.Admin;
+import me.github.notsaki.userapplication.model.AdminModel;
 import me.github.notsaki.userapplication.domain.repository.AdminRepository;
 import me.github.notsaki.userapplication.util.AppProfile;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,7 +26,7 @@ public class AdminRepositoryImpl implements AdminRepository {
 	@Override
 	public Optional<Admin> findByUsername(String username) {
 		return this.entityManager
-				.createQuery("SELECT a FROM Admin a WHERE a.username = :username", Admin.class)
+				.createQuery("SELECT a FROM AdminModel a WHERE a.username = :username", Admin.class)
 				.setParameter("username", username)
 				.getResultList()
 				.stream()
