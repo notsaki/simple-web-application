@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.controlleradvice;
 
 import me.github.notsaki.userapplication.domain.entity.error.GenericError;
-import me.github.notsaki.userapplication.controlleradvice.exception.RecordNotFoundException;
+import me.github.notsaki.userapplication.exception.RecordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

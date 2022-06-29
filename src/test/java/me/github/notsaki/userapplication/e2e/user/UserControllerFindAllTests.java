@@ -1,6 +1,5 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;

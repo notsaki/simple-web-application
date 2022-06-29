@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.controlleradvice.exception;
+package me.github.notsaki.userapplication.exception;
 
 public class RecordNotFoundException extends Exception {
 	private final Object context;

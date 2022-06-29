@@ -41,13 +41,17 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 		var refreshToken = this.objectMapper.writeValueAsString(new RefreshToken(this.expiredToken));
 
 		this.refresh(refreshToken)
-				.andExpect(status().isForbidden());
+				.andExpect(status().isForbidden())
+				.andExpect(jsonPath("access_token").doesNotExist())
+				.andExpect(jsonPath("refresh_token").doesNotExist());
 	}
 
 	@Test
 	public void whenSendingInvalidBody_shouldReturnStatusBadRequest() throws Exception {
 		this.refresh("token")
-				.andExpect(status().isBadRequest());
+				.andExpect(status().isBadRequest())
+				.andExpect(jsonPath("access_token").doesNotExist())
+				.andExpect(jsonPath("refresh_token").doesNotExist());
 	}
 
 	@Test
@@ -55,6 +59,8 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 		// TODO: Change API to return Unauthorized instead of Forbidden.
 		var body = this.objectMapper.writeValueAsString(new RefreshToken(this.invalidToken));
 		this.refresh(body)
-				.andExpect(status().isForbidden());
+				.andExpect(status().isForbidden())
+				.andExpect(jsonPath("access_token").doesNotExist())
+				.andExpect(jsonPath("refresh_token").doesNotExist());
 	}
 }
