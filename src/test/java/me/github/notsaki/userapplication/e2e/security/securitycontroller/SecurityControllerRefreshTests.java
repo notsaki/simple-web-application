@@ -2,7 +2,9 @@ package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
 import me.github.notsaki.userapplication.entity.receive.RefreshTokenEntity;
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
+import me.github.notsaki.userapplication.service.TokenServiceImpl;
 import me.github.notsaki.userapplication.util.Routes;
+import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -62,5 +64,22 @@ public class SecurityControllerRefreshTests extends E2eAuthSetup {
 				.andExpect(status().isForbidden())
 				.andExpect(jsonPath("access_token").doesNotExist())
 				.andExpect(jsonPath("refresh_token").doesNotExist());
+	}
+
+	@Test
+	public void switchingTokenWithAnotherSecret_shouldReturnForbidden() throws Exception {
+		var admin = AdminStub.one();
+		var jwt = new TokenServiceImpl("test")
+				.generateToken(admin.getUsername(), "/token");
+
+		var refreshToken = this.objectMapper.writeValueAsString(new RefreshTokenEntity(jwt.refresh_token()));
+
+		this.mvc
+				.perform(
+						post(this.route)
+								.contentType(MediaType.APPLICATION_JSON)
+								.content(refreshToken)
+				)
+				.andExpect(status().isForbidden());
 	}
 }
