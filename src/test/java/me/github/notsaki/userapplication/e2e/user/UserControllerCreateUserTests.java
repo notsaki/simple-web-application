@@ -2,6 +2,7 @@ package me.github.notsaki.userapplication.e2e.user;
 
 import me.github.notsaki.userapplication.domain.entity.ValidationMessage;
 import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
+import me.github.notsaki.userapplication.entity.error.ValidationInfoEntity;
 import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
@@ -113,7 +114,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
         this.assertEmptyDb();
     }
 
-    private String getInstructionByTarget(List<ValidationInfo> info, String property) {
+    private String getInstructionByTarget(List<ValidationInfoEntity> info, String property) {
         return info
                 .stream()
                 .filter(error -> error.getTargetLocation().equals(property))
@@ -155,7 +156,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 .andReturn();
 
         var errors = Arrays
-                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), ValidationInfo[].class))
+                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), ValidationInfoEntity[].class))
                 .toList();
 
         Assert.assertEquals(ValidationMessage.nameLength, this.getInstructionByTarget(errors, "name"));
