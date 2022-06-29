@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.application.filter;
+package me.github.notsaki.userapplication.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
@@ -28,7 +28,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return !Routes.login.equals(path) || !request.getMethod().equals("POST");
+		return !Routes.login.equals(path) || !request.getMethod().equals("POST") || request.getMethod().equals("OPTIONS");
 	}
 
 	/**

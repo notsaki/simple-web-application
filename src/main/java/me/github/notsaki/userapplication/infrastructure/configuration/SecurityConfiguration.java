@@ -2,10 +2,11 @@ package me.github.notsaki.userapplication.infrastructure.configuration;
 
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.infrastructure.dsl.HttpDsl;
-import me.github.notsaki.userapplication.application.filter.AuthenticationFilter;
-import me.github.notsaki.userapplication.application.filter.AuthorizationFilter;
+import me.github.notsaki.userapplication.infrastructure.filter.AuthenticationFilter;
+import me.github.notsaki.userapplication.infrastructure.filter.AuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -35,6 +37,10 @@ public class SecurityConfiguration {
 
 		http.csrf().disable();
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+		http.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**")
+				.permitAll();
 
 		http.authorizeRequests()
 				.antMatchers("/login/**", "/token/**")

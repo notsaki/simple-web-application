@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.application.filter;
+package me.github.notsaki.userapplication.infrastructure.filter;
 
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.util.Routes;

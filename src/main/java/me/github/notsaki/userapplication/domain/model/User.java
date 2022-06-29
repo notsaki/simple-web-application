@@ -38,7 +38,6 @@ public interface User {
 
     void setHomeAddress(HomeAddressModel homeAddress);
 
-    @Override
     boolean equals(Object o);
 
     int hashCode();
