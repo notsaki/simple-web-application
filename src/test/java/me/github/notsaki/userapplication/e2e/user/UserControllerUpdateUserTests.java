@@ -21,10 +21,8 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class UserControllerUpdateUserTests extends E2eSetup {
