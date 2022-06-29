@@ -1,12 +1,10 @@
 package me.github.notsaki.userapplication.controller;
 
-import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -34,7 +32,7 @@ public class UserControllerOnCreateTests {
 	@Autowired
 	private UserController userController;
 
-	private final ReceiveUserDto receiveUser = ReceiveUserStub.one();
+	private final ReceiveUserDtoEntity receiveUser = ReceiveUserStub.one();
 	private ResponseUserDto user;
 
 	@Before

@@ -1,18 +1,18 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
-import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.model.UserModel;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UserStub {
-	public static User One() {
+	public static UserModel One() {
 		var user = ReceiveUserStub.one().toUser();
 		user.setId(1);
 		return user;
 	}
 
-	public static List<User> list() {
+	public static List<UserModel> list() {
 		AtomicInteger count = new AtomicInteger();
 		return ReceiveUserStub.list()
 				.stream()

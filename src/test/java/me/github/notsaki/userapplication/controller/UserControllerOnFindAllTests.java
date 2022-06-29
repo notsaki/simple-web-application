@@ -34,7 +34,7 @@ public class UserControllerOnFindAllTests {
 	@Autowired
 	private UserController userController;
 
-	private final List<ReceiveUserDto> receiveUsers = ReceiveUserStub.list();
+	private final List<ReceiveUserDtoEntity> receiveUsers = ReceiveUserStub.list();
 	private List<ReceiveUserDto> returnedUsersAsReceived;
 
 	@Before

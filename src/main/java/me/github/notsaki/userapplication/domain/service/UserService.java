@@ -13,14 +13,14 @@ public interface UserService {
 	 * @param userDto the user data excluding the ID.
 	 * @return the same user date including the generated ID.
 	 */
-	public ResponseUserDto save(ReceiveUserDto userDto);
+	ResponseUserDto save(ReceiveUserDto userDto);
 
 	/**
 	 * Remove a user by ID.
 	 * @param id the id for the user to delete.
 	 * @return true if the user was deleted and false if the user was not found.
 	 */
-	public boolean deleteById(int id);
+	boolean deleteById(int id);
 
 	/**
 	 * Update a user by ID.
@@ -34,12 +34,12 @@ public interface UserService {
 	 * Retrieve all saved users.
 	 * @return a list of users' names and surnames.
 	 */
-	public List<UserListItemDto> findAll();
+	List<UserListItemDto> findAll();
 
 	/**
 	 * Find a user by ID.
 	 * @param id the user ID to match.
 	 * @return a user if the user was found and empty if not.
 	 */
-	public Optional<ResponseUserDto> findById(int id);
+	Optional<ResponseUserDto> findById(int id);
 }

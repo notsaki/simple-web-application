@@ -33,7 +33,7 @@ public class UserController {
 	 */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseUserDto create(@Valid @RequestBody ReceiveUserDto receiveUserDto) {
+	public ResponseUserDto create(@Valid @RequestBody ReceiveUserDtoEntity receiveUserDto) {
 		return this.userService.save(receiveUserDto);
 	}
 

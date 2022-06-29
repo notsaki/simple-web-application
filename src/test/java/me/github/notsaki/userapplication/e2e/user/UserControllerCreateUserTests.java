@@ -44,6 +44,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
     public void sendingRequestWithValidBody_shouldReturnCreated() throws Exception {
         var userStub = ReceiveUserStub.one();
         var user = this.objectMapper.writeValueAsString(userStub);
+
         var token = this.login();
 
         var body = this.mvc
