@@ -1,7 +1,7 @@
 ## Simple Web Application
 
-- [API Documentation]()
-- [Client Repository]()
+- [API Documentation](https://simpleappreactspring.stoplight.io/docs/simple-web-application/af776cba49937-user-database)
+- [Client Repository](https://github.com/notsaki/simple-web-application-client)
 
 
 - Clean build for production: `make build`
@@ -10,8 +10,8 @@
 
 ### General information
 
-The application supports basic user management with admin authentication. An admin can view, save, update and delete 
-users.
+The application is a REST API that supports basic user management with admin authentication. An admin can view, save, update and delete 
+users. The authentication is done with JWTs.
 
 The application can be run through a docker container (a compose file is also provided) and the configuration is being 
 done through environment variables. The `.env.example` should be renamed to `.env` with all the required information 
