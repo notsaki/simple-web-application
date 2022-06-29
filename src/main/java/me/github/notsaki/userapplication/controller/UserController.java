@@ -13,6 +13,9 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controller to manage and read users.
+ */
 @RestController("User Controller")
 @RequestMapping(Routes.user)
 public class UserController {
@@ -22,12 +25,22 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	/**
+	 * Save a new user. User information should be validated before reaching the controller.
+	 * @param receiveUserDto valid user information.
+	 * @return Created user information with the generated ID.
+	 */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseUserDto create(@Valid @RequestBody ReceiveUserDto receiveUserDto) {
 		return this.userService.save(receiveUserDto);
 	}
 
+	/**
+	 * Remove a user by ID.
+	 * @param id the user ID to match for deletion.
+	 * @throws RecordNotFoundException when the ID doesn't match to any user.
+	 */
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteById(@PathVariable int id) throws RecordNotFoundException {
@@ -35,6 +48,13 @@ public class UserController {
 			throw new RecordNotFoundException(Map.of("userId", id));
 	}
 
+	/**
+	 * Update a user by ID.
+	 * @param id the user ID to match.
+	 * @param user the new full user information including the unchanged properties.
+	 * @return the updated user.
+	 * @throws RecordNotFoundException when the ID doesn't match to any user.
+	 */
 	@PatchMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
@@ -47,11 +67,21 @@ public class UserController {
 				.orElseThrow(() -> new RecordNotFoundException(Map.of("userId", id)));
 	}
 
+	/**
+	 * Returns a list of all users.
+	 * @return Name and surname for each user.
+	 */
 	@GetMapping
 	public List<UserListItemDto> findAll() {
 		return this.userService.findAll();
 	}
 
+	/**
+	 * Find a user by ID.
+	 * @param id the user ID to match.
+	 * @return The full user information.
+	 * @throws RecordNotFoundException when the ID doesn't match to any user.
+	 */
 	@GetMapping("/{id}")
 	public ResponseUserDto findById(@PathVariable("id") int id) throws RecordNotFoundException {
 		return this.userService

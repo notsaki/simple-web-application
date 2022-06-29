@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Controller to receive access tokens.
+ */
 @RestController("Security Controller")
 public class SecurityController {
 	private final TokenService tokenService;
@@ -24,6 +27,12 @@ public class SecurityController {
 		this.userDetailsService = userDetailsService;
 	}
 
+	/**
+	 * Retrieve a JWT token. When reaching the method the credentials should already be valid. The method gets the
+	 * principal and generates a token based on it.
+	 * @param request Servlet's request object.
+	 * @return access and refresh tokens.
+	 */
 	@PostMapping(Routes.login)
 	@ResponseStatus(HttpStatus.CREATED)
 	public JwtToken login(HttpServletRequest request) {
@@ -31,6 +40,12 @@ public class SecurityController {
 		return this.tokenService.generateToken(principal.getName(), Routes.login);
 	}
 
+	/**
+	 * Retrieve a new JWT token. Accepts any JWT token and after validating it, it generates a new one.
+	 * @param request Servlet's request object.
+	 * @param refreshToken Any valid JWT token with subject a valid admin user.
+	 * @return access and refresh tokens.
+	 */
 	@PostMapping(Routes.refreshToken)
 	@ResponseStatus(HttpStatus.CREATED)
 	public JwtToken refresh(HttpServletRequest request, @RequestBody RefreshToken refreshToken) {

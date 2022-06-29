@@ -15,6 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Filter to authenticate user credentials. The filter only runs in the POST /login endpoint.
+ */
 public class AuthenticationFilter extends OncePerRequestFilter {
 	private final AuthenticationManager authenticationManager;
 
@@ -28,6 +31,11 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 		return !Routes.login.equals(path) || !request.getMethod().equals("POST");
 	}
 
+	/**
+	 * The method deserialises the user body and creates an authentication user. Using the authentication manager
+	 * which uses a UserDetailsService implementation validates the user and  if validated, it assigns them into the
+	 * security context. Otherwise, the request is being interrupted and unauthorised response is being sent,
+	 */
 	@Override
 	protected void doFilterInternal(
 			HttpServletRequest request,

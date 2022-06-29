@@ -1,5 +1,9 @@
 package me.github.notsaki.userapplication.exception;
 
+/**
+ * Exception that is thrown when any kind of entity is missing. The class is usually used in find, delete and update
+ * operations.
+ */
 public class RecordNotFoundException extends Exception {
 	private final Object context;
 

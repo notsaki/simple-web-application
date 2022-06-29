@@ -15,6 +15,10 @@ import java.util.List;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
+/**
+ * Filter to authorise a request. The filter skips if the route is /login or /token and also skips any kind of CORS
+ * request.
+ */
 public class AuthorizationFilter extends OncePerRequestFilter {
 	private final TokenService tokenService;
 	public AuthorizationFilter(TokenService tokenService) {
@@ -27,6 +31,11 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		return Routes.login.equals(path) || Routes.refreshToken.equals(path) || request.getMethod().equals("OPTIONS");
 	}
 
+	/**
+	 * The method reads the Authorization header, and validates it through a UserService implementation. If the service
+	 * returns a username, it assigns it to the SecurityContextHolder. Otherwise, the request gets interrupted and an
+	 * unauthorised response is being sent.
+	 */
 	@Override
 	protected void doFilterInternal(
 			HttpServletRequest request,

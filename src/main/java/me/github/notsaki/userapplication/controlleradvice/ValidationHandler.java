@@ -11,9 +11,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.List;
 
+/**
+ * Handler for request body validation error.
+ */
 @ControllerAdvice
 public class ValidationHandler extends ResponseEntityExceptionHandler {
 
+	/**
+	 * @return A list of objects with the target properties that is invalid and instructions on how to fix them.
+	 */
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 			MethodArgumentNotValidException exception,
