@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.domain.repository;
 
-import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
+import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.User;
 import org.springframework.stereotype.Repository;
 

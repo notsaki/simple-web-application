@@ -1,8 +1,8 @@
 package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
-import me.github.notsaki.userapplication.entity.receive.RefreshTokenEntity;
+import me.github.notsaki.userapplication.infrastructure.data.receive.RefreshTokenEntity;
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
-import me.github.notsaki.userapplication.service.TokenServiceImpl;
+import me.github.notsaki.userapplication.infrastructure.service.TokenServiceImpl;
 import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
 import org.junit.Test;

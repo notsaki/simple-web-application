@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
-import me.github.notsaki.userapplication.entity.receive.CredentialsEntity;
+import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;

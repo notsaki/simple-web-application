@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
-import me.github.notsaki.userapplication.model.UserModel;
+import me.github.notsaki.userapplication.infrastructure.model.UserModel;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

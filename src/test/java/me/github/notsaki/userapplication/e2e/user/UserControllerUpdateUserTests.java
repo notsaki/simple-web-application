@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;

@@ -1,9 +1,9 @@
 package me.github.notsaki.userapplication.domain.model;
 
-import me.github.notsaki.userapplication.domain.entity.response.ResponseUserDto;
-import me.github.notsaki.userapplication.domain.entity.response.UserListItemDto;
-import me.github.notsaki.userapplication.model.HomeAddressModel;
-import me.github.notsaki.userapplication.model.WorkAddressModel;
+import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
+import me.github.notsaki.userapplication.infrastructure.model.HomeAddressModel;
+import me.github.notsaki.userapplication.infrastructure.model.WorkAddressModel;
 import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;

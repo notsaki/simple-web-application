@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.domain.service;
 
-import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.JwtTokenEntity;
 
 import java.util.Optional;
 

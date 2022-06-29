@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.stub.admin;
 
-import me.github.notsaki.userapplication.model.AdminModel;
+import me.github.notsaki.userapplication.infrastructure.model.AdminModel;
 
 public class AdminStub {
 	public static AdminModel one() {

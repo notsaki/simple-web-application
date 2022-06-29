@@ -2,8 +2,8 @@ package me.github.notsaki.userapplication.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import me.github.notsaki.userapplication.entity.receive.CredentialsEntity;
-import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
+import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

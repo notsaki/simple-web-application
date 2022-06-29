@@ -1,10 +1,9 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.domain.entity.ValidationMessage;
-import me.github.notsaki.userapplication.domain.entity.error.ValidationInfo;
-import me.github.notsaki.userapplication.entity.error.ValidationInfoEntity;
-import me.github.notsaki.userapplication.entity.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.entity.response.ResponseUserDtoEntity;
+import me.github.notsaki.userapplication.domain.data.ValidationMessage;
+import me.github.notsaki.userapplication.infrastructure.data.error.ValidationInfoEntity;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;

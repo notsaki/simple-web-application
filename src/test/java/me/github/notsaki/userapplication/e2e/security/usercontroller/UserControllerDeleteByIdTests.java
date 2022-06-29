@@ -1,12 +1,10 @@
 package me.github.notsaki.userapplication.e2e.security.usercontroller;
 
 import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
-import me.github.notsaki.userapplication.service.TokenServiceImpl;
+import me.github.notsaki.userapplication.infrastructure.service.TokenServiceImpl;
 import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
-import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;

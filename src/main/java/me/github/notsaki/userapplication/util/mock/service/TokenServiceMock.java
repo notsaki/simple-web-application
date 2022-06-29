@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.util.mock.service;
 
-import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.JwtTokenEntity;
 import me.github.notsaki.userapplication.domain.service.TokenService;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;

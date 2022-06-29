@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.repository;
 
-import me.github.notsaki.userapplication.domain.entity.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.entity.response.UserListItemDtoEntity;
+import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.infrastructure.data.response.UserListItemDtoEntity;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;

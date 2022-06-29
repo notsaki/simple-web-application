@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.e2e;
 
-import me.github.notsaki.userapplication.entity.response.JwtTokenEntity;
+import me.github.notsaki.userapplication.infrastructure.data.response.JwtTokenEntity;
 
 public abstract class E2eAuthSetup extends E2eSetup {
 
