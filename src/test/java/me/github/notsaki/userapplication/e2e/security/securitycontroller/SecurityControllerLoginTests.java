@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -20,20 +20,18 @@ public class SecurityControllerLoginTests extends E2eSetup {
 		return this.mvc
 				.perform(
 						post(this.route)
+								.with(csrf().asHeader())
 								.contentType(MediaType.APPLICATION_JSON)
 								.content(body)
 				);
 	}
 
 	@Test
-	public void whenSendingValidCredentials_shouldReturnStatusOk() throws Exception {
+	public void whenSendingValidCredentials_shouldReturnStatusCreated() throws Exception {
 		var body = this.objectMapper.writeValueAsString(new CredentialsEntity("admin","admin"));
 
 		this.login(body)
-				.andExpect(status().isCreated())
-				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-				.andExpect(jsonPath("access_token").exists())
-				.andExpect(jsonPath("refresh_token").exists());
+				.andExpect(status().isCreated());
 	}
 
 	@Test

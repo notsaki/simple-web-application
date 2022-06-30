@@ -24,7 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,14 +46,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
         var userStub = ReceiveUserStub.one();
         var user = this.objectMapper.writeValueAsString(userStub);
 
-        var token = this.login();
-
         var body = this.mvc
                 .perform(
-                        post(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                post(this.route)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -67,14 +67,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
 
     @Test
     public void sendingInvalidBodyFormat_shouldReturnBadRequestAndNotSaveAnyUser() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        post(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("invalid_body")
+                        withAuth(
+                                post(this.route)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content("invalid_body")
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -89,14 +88,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
 
     @Test
     public void sendingMissingBodyProperties_shouldReturnUnprocessableAndNotSaveAnyUser() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        post(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("{}")
+                        withAuth(
+                                post(this.route)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content("{}")
+                        )
                 )
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -134,14 +132,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);
-        var token = this.login();
-
         var body = this.mvc
                 .perform(
-                        post(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                post(this.route)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -181,14 +178,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        post(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                post(this.route)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andReturn();

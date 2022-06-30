@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -59,15 +59,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
     public void sendingRequestWithValidBody_shouldReturnOkAndUpdateTheUser() throws Exception {
         var userToUpdate = ReceiveUserStub.another();
         var user = this.objectMapper.writeValueAsString(userToUpdate);
-
-        var token = this.login();
-
         var body = this.mvc
                 .perform(
-                        patch(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                patch(this.route + "/" + this.createdUser.getId())
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -84,14 +82,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
 
     @Test
     public void sendingInvalidBodyFormat_shouldReturnBadRequestAndNotUpdateAnyUser() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        patch(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content("invalid_body")
+                        withAuth(
+                                patch(this.route + "/" + this.createdUser.getId())
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content("invalid_body")
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -116,14 +113,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        patch(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                patch(this.route + "/" + this.createdUser.getId())
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -150,14 +146,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        patch(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                patch(this.route + "/" + this.createdUser.getId())
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -175,14 +170,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         var stub = ReceiveUserStub.one();
 
         var user = this.objectMapper.writer().writeValueAsString(stub);
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        patch(this.route + "/" + 0)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                patch(this.route + "/" + 0)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -207,14 +201,13 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        patch(this.route + "/" + 0)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
+                        withAuth(
+                                patch(this.route + "/" + 0)
+                                        .contentType(MediaType.APPLICATION_JSON)
+                                        .content(user)
+                        )
                 )
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("name").doesNotExist())

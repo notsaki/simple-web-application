@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -33,12 +33,11 @@ public class UserControllerFindByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithExistingId_shouldReturnTheCreatedUser() throws Exception {
-        var token = this.login();
-
         var body = this.mvc
                 .perform(
-                        get(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                get(this.route + "/" + this.createdUser.getId())
+                        )
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -51,12 +50,11 @@ public class UserControllerFindByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithNonExistingId_shouldReturnNotFound() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        get(this.route + "/" + 0)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                get(this.route + "/" + 0)
+                        )
                 )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -69,12 +67,11 @@ public class UserControllerFindByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithInvalidId_shouldReturnBadRequest() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        get(this.route + "/" + "invalid_id")
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                get(this.route + "/" + "invalid_id")
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())

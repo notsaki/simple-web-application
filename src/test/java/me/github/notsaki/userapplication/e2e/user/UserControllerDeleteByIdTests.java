@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -39,12 +39,11 @@ public class UserControllerDeleteByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithExistingId_shouldDeleteTheUser() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        delete(this.route + "/" + this.createdUser.getId())
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                delete(this.route + "/" + this.createdUser.getId())
+                        )
                 )
                 .andExpect(status().isNoContent())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -60,12 +59,11 @@ public class UserControllerDeleteByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithNonExistingId_shouldReturnNotFound() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        delete(this.route + "/" + 0)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                delete(this.route + "/" + 0)
+                        )
                 )
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("name").doesNotExist())
@@ -81,12 +79,11 @@ public class UserControllerDeleteByIdTests extends E2eSetup {
 
     @Test
     public void sendingRequestWithInvalidId_shouldReturnBadRequest() throws Exception {
-        var token = this.login();
-
         this.mvc
                 .perform(
-                        delete(this.route + "/" + "invalid_id")
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                delete(this.route + "/" + "invalid_id")
+                        )
                 )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())

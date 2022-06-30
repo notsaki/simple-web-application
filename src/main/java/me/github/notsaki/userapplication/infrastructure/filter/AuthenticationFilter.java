@@ -11,6 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) {
 		String path = request.getRequestURI();
-		return !Routes.login.equals(path) || !request.getMethod().equals("POST") || request.getMethod().equals("OPTIONS");
+		return !Routes.login.equals(path) || !request.getMethod().equals("POST");
 	}
 
 	/**

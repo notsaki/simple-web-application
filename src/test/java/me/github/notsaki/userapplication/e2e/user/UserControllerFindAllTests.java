@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -40,12 +39,11 @@ public class UserControllerFindAllTests extends E2eSetup {
 
     @Test
     public void sendingRequest_shouldReturnTheCreatedUsers() throws Exception {
-        var token = this.login();
-
         var body = this.mvc
                 .perform(
-                        get(this.route)
-                                .header(AUTHORIZATION, "Bearer " + token.access_token())
+                        withAuth(
+                                get(this.route)
+                        )
                 )
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
