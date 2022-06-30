@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.e2e.security.usercontroller;
 
 import me.github.notsaki.userapplication.e2e.E2eSetup;
+import me.github.notsaki.userapplication.e2e.E2eAuthSetup;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
 

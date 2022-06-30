@@ -6,9 +6,6 @@ import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import javax.servlet.http.Cookie;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
