@@ -20,7 +20,6 @@ services:
         "spring.datasource.password": "$MYSQLDB_ROOT_PASSWORD",
         "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.hibernate.ddl-auto": "update",
-        "security.jwt.secret": "$JWT_SECRET",
         "spring.profiles.active": "impl",
         "header.allowed.origin": "$ALLOWED_ORIGIN",
         "admin.username": "$ADMIN_USERNAME",

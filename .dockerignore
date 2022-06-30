@@ -1,0 +1,11 @@
+.git/
+.idea/
+
+target/
+docker/
+
+.dockerignore
+.gitignore
+
+README.md
+HELP.md
