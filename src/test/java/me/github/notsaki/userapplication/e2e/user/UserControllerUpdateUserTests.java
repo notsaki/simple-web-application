@@ -1,11 +1,11 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
+import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.Routes;
 import me.github.notsaki.userapplication.testutil.entityreversemapper.UserReverseMapper;
@@ -40,7 +40,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         Assert.assertEquals(user, this.createdUser);
     }
 
-    private void assertUpdatedInDb(ResponseUserDtoEntity response) {
+    private void assertUpdatedInDb(ResponseUserDto response) {
         var user = this.userRepository
                 .findById(this.createdUser.getId())
                 .orElseThrow()
@@ -70,7 +70,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
         Assert.assertEquals(UserReverseMapper.fromResponseToReceive(receivedUser), userToUpdate);

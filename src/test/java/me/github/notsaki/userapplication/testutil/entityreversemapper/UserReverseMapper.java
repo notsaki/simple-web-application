@@ -3,10 +3,10 @@ package me.github.notsaki.userapplication.testutil.entityreversemapper;
 import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.infrastructure.model.HomeAddressModel;
 import me.github.notsaki.userapplication.infrastructure.model.UserModel;
 import me.github.notsaki.userapplication.infrastructure.model.WorkAddressModel;
-import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 
 import java.util.List;
 

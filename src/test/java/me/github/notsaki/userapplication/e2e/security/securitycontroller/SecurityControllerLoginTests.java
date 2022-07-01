@@ -1,13 +1,10 @@
 package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
 import me.github.notsaki.userapplication.e2e.E2eSetup;
-import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

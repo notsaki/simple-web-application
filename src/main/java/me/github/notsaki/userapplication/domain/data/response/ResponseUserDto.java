@@ -4,12 +4,13 @@ import me.github.notsaki.userapplication.domain.model.Gender;
 
 import java.time.LocalDate;
 
-public interface ResponseUserDto {
-	int id();
-	String name();
-	String surname();
-	Gender gender();
-	LocalDate birthdate();
-	String workAddress();
-	String homeAddress();
+public record ResponseUserDto(
+		int id,
+		String name,
+		String surname,
+		Gender gender,
+		LocalDate birthdate,
+		String workAddress,
+		String homeAddress
+) {
 }

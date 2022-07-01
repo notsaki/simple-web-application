@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.application.controller;
 
+import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.service.UserService;
@@ -60,7 +61,7 @@ public class UserController {
 	@ResponseBody
 	public ResponseUserDto updateById(
 			@PathVariable("id") int id,
-			@Valid @RequestBody ReceiveUserDtoEntity user
+			@Valid @RequestBody ReceiveUserDto user
 	) throws RecordNotFoundException {
 		return this.userService
 				.updateById(id, user)

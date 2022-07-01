@@ -1,7 +1,7 @@
 package me.github.notsaki.userapplication.util.stub.user;
 
-import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

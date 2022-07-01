@@ -1,8 +1,7 @@
 package me.github.notsaki.userapplication.infrastructure.model;
 
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
-import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
-import me.github.notsaki.userapplication.infrastructure.data.response.UserListItemDtoEntity;
+import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.model.User;
 import org.springframework.lang.Nullable;
@@ -143,7 +142,7 @@ public class UserModel implements User {
 	}
 
 	public ResponseUserDto toResponse() {
-		return new ResponseUserDtoEntity(
+		return new ResponseUserDto(
 				this.getId(),
 				this.getName(),
 				this.getSurname(),
@@ -154,8 +153,8 @@ public class UserModel implements User {
 		);
 	}
 
-	public UserListItemDtoEntity toFullName() {
-		return new UserListItemDtoEntity(
+	public UserListItemDto toFullName() {
+		return new UserListItemDto(
 				this.getId(),
 				this.getName(),
 				this.getSurname()

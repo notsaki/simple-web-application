@@ -1,9 +1,9 @@
 package me.github.notsaki.userapplication.e2e.user;
 
 import me.github.notsaki.userapplication.domain.data.ValidationMessage;
-import me.github.notsaki.userapplication.infrastructure.data.error.ValidationInfoEntity;
+import me.github.notsaki.userapplication.domain.data.error.ValidationInfo;
+import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
 import me.github.notsaki.userapplication.domain.model.Gender;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
@@ -24,7 +24,6 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -57,7 +56,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
         var dbUser = this.userRepository.findById(receivedUser.id()).orElseThrow().toResponse();
 
         Assert.assertEquals(userStub, UserReverseMapper.fromResponseToReceive(receivedUser));
@@ -110,13 +109,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
         this.assertEmptyDb();
     }
 
-    private String getInstructionByTarget(List<ValidationInfoEntity> info, String property) {
+    private String getInstructionByTarget(List<ValidationInfo> info, String property) {
         return info
                 .stream()
-                .filter(error -> error.getTargetLocation().equals(property))
+                .filter(error -> error.targetLocation().equals(property))
                 .findFirst()
                 .orElseThrow()
-                .getInstructions();
+                .instructions();
     }
 
     @Test
@@ -151,7 +150,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
                 .andReturn();
 
         var errors = Arrays
-                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), ValidationInfoEntity[].class))
+                .stream(this.objectMapper.readValue(body.getResponse().getContentAsString(), ValidationInfo[].class))
                 .toList();
 
         Assert.assertEquals(ValidationMessage.nameLength, this.getInstructionByTarget(errors, "name"));

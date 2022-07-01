@@ -2,7 +2,6 @@ package me.github.notsaki.userapplication.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.github.notsaki.userapplication.domain.service.SecurityService;
-import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
