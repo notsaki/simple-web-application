@@ -2,6 +2,8 @@ package me.github.notsaki.userapplication.controller;
 
 import me.github.notsaki.userapplication.application.controller.UserController;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
+import me.github.notsaki.userapplication.domain.exception.BadDataException;
+import me.github.notsaki.userapplication.domain.exception.ValidationException;
 import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
@@ -36,7 +38,7 @@ public class UserControllerOnCreateTests {
 	private ResponseUserDto user;
 
 	@Before
-	public void createUser() {
+	public void createUser() throws ValidationException, BadDataException {
 		this.user = userController.create(this.receiveUser);
 	}
 

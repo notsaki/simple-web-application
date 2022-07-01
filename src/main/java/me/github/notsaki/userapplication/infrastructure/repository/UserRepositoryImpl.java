@@ -58,7 +58,7 @@ public class UserRepositoryImpl implements UserRepository {
         return this.entityManager
                 .createQuery("""
                         SELECT
-                            new me.github.notsaki.userapplication.infrastructure.data.response.UserListItemDtoEntity(
+                            new me.github.notsaki.userapplication.domain.data.response.UserListItemDto(
                                 u.id,
                                 u.name,
                                 u.surname

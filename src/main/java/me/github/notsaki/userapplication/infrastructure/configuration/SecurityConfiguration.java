@@ -1,8 +1,7 @@
 package me.github.notsaki.userapplication.infrastructure.configuration;
 
-import me.github.notsaki.userapplication.domain.service.AdminService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.github.notsaki.userapplication.domain.service.SecurityService;
-import me.github.notsaki.userapplication.domain.util.PasswordEncoder;
 import me.github.notsaki.userapplication.infrastructure.filter.AuthenticationFilter;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.context.annotation.Bean;
@@ -19,9 +18,11 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @EnableWebSecurity
 public class SecurityConfiguration {
 	private final SecurityService securityService;
+	private final ObjectMapper objectMapper;
 
-	public SecurityConfiguration(SecurityService securityService) {
+	public SecurityConfiguration(SecurityService securityService, ObjectMapper objectMapper) {
 		this.securityService = securityService;
+		this.objectMapper = objectMapper;
 	}
 
 	@Bean
@@ -47,7 +48,7 @@ public class SecurityConfiguration {
 		http.logout().disable();
 
 		http.addFilterBefore(
-				new AuthenticationFilter(this.securityService),
+				new AuthenticationFilter(this.securityService, this.objectMapper),
 				UsernamePasswordAuthenticationFilter.class
 		);
 

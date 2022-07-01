@@ -101,7 +101,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
     }
 
     @Test
-    public void sendingMissingProperties_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
+    public void sendingINvalidData_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
         var obj = new ReceiveUserDtoEntity(
                 "",
                 "",
@@ -136,12 +136,12 @@ public class UserControllerUpdateUserTests extends E2eSetup {
         var stub = ReceiveUserStub.one();
 
         var obj = Map.of(
-                "name", stub.name(),
-                "surname", stub.surname(),
+                "name", stub.getName(),
+                "surname", stub.getSurname(),
                 "gender", "",
-                "birthdate", stub.birthdate(),
-                "workAddress", Objects.requireNonNull(stub.workAddress()),
-                "homeAddress", Objects.requireNonNull(stub.homeAddress())
+                "birthdate", stub.getBirthdate(),
+                "workAddress", Objects.requireNonNull(stub.getWorkAddress()),
+                "homeAddress", Objects.requireNonNull(stub.getHomeAddress())
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);

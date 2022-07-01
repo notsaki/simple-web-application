@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.github.notsaki.userapplication.domain.data.receive.Credentials;
 import me.github.notsaki.userapplication.domain.service.SecurityService;
 import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,9 +20,11 @@ import java.util.List;
  */
 public class AuthenticationFilter extends OncePerRequestFilter {
 	private final SecurityService securityService;
+	private final ObjectMapper objectMapper;
 
-	public AuthenticationFilter(SecurityService securityService) {
+	public AuthenticationFilter(SecurityService securityService, ObjectMapper objectMapper) {
 		this.securityService = securityService;
+		this.objectMapper = objectMapper;
 	}
 
 	@Override
@@ -42,7 +45,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 			FilterChain filterChain
 	) throws IOException, ServletException {
 		try {
-			var credentials = new ObjectMapper().readValue(request.getInputStream(), CredentialsEntity.class);
+			var credentials = this.objectMapper.readValue(request.getInputStream(), Credentials.class);
 			var result = this.securityService.authenticate(credentials);
 
 			if(result.isPresent()) {
@@ -58,7 +61,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 				return;
 			}
 
-		} catch (IOException ignore) {
+		} catch (IOException | IllegalArgumentException ignore) {
 		}
 
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);

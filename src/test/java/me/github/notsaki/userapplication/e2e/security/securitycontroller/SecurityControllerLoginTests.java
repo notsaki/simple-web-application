@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.e2e.security.securitycontroller;
 
+import me.github.notsaki.userapplication.domain.data.receive.Credentials;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
@@ -25,7 +26,7 @@ public class SecurityControllerLoginTests extends E2eSetup {
 
 	@Test
 	public void whenSendingValidCredentials_shouldReturnStatusCreated() throws Exception {
-		var body = this.objectMapper.writeValueAsString(new CredentialsEntity("admin","admin"));
+		var body = this.objectMapper.writeValueAsString(new Credentials("admin","admin"));
 
 		this.login(body)
 				.andExpect(status().isCreated());
@@ -41,7 +42,7 @@ public class SecurityControllerLoginTests extends E2eSetup {
 
 	@Test
 	public void whenSendingInvalidPassword_shouldReturnStatusUnauthorized() throws Exception {
-		var body = this.objectMapper.writeValueAsString(new CredentialsEntity("admin",""));
+		var body = this.objectMapper.writeValueAsString(new Credentials("admin",""));
 
 		this.login(body)
 				.andExpect(status().isUnauthorized())
@@ -51,7 +52,7 @@ public class SecurityControllerLoginTests extends E2eSetup {
 
 	@Test
 	public void whenSendingInvalidUsername_shouldReturnStatusUnauthorized() throws Exception {
-		var body = this.objectMapper.writeValueAsString(new CredentialsEntity("","admin"));
+		var body = this.objectMapper.writeValueAsString(new Credentials("","admin"));
 
 		this.login(body)
 				.andExpect(status().isUnauthorized())

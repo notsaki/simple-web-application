@@ -1,8 +1,8 @@
 package me.github.notsaki.userapplication.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -28,12 +28,12 @@ public abstract class E2eSetup {
 	@Autowired
 	protected MockMvc mvc;
 	protected final ObjectMapper objectMapper;
-	protected Cookie cookie;
 	protected Cookie invalidCookie = new Cookie("JSESSION", "invalid");
 	protected Cookie expiredCookie = new Cookie("JSESSION", "FBAC394FB8CC4E0C82B817F1F8D058FA");
 
 	public E2eSetup() {
 		this.objectMapper = new ObjectMapper();
+		this.objectMapper.registerModule(new Jdk8Module());
 		this.objectMapper.registerModule(new JavaTimeModule());
 	}
 

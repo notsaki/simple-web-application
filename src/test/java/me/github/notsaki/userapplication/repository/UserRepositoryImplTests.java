@@ -1,13 +1,12 @@
 package me.github.notsaki.userapplication.repository;
 
 import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
-import me.github.notsaki.userapplication.infrastructure.data.response.UserListItemDtoEntity;
-import me.github.notsaki.userapplication.util.AppProfile;
+import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,19 +57,19 @@ public class UserRepositoryImplTests {
 				.map(ReceiveUserDto::toUser)
 				.toList();
 
-		var generatedUsers = users
+		var created = users
 				.stream()
 				.map(user -> this.userRepository.save(user))
 				.toList();
 
 		var saved = users
 				.stream()
-				.map(user -> new UserListItemDtoEntity(user.getId(), user.getName(), user.getSurname()))
+				.map(user -> new UserListItemDto(user.getId(), user.getName(), user.getSurname()))
 				.toList();
 
 		var result = this.userRepository.findAll();
 
-		Assert.assertEquals(result, saved);
+		Assert.assertEquals(saved, result);
 	}
 
 	@Test

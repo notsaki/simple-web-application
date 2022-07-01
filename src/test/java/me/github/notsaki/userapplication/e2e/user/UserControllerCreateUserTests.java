@@ -85,7 +85,7 @@ public class UserControllerCreateUserTests extends E2eSetup {
     }
 
     @Test
-    public void sendingMissingBodyProperties_shouldReturnUnprocessableAndNotSaveAnyUser() throws Exception {
+    public void sendingMissingBodyProperties_shouldReturnBadRequestAndNotSaveAnyUser() throws Exception {
         this.mvc
                 .perform(
                         withAuth(
@@ -94,17 +94,13 @@ public class UserControllerCreateUserTests extends E2eSetup {
                                         .content("{}")
                         )
                 )
-                .andExpect(status().isUnprocessableEntity())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("name").doesNotExist())
                 .andExpect(jsonPath("surname").doesNotExist())
                 .andExpect(jsonPath("gender").doesNotExist())
                 .andExpect(jsonPath("birthdate").doesNotExist())
                 .andExpect(jsonPath("workAddress").doesNotExist())
-                .andExpect(jsonPath("homeAddress").doesNotExist())
-                // TODO: Find a more elegant way to test.
-                .andExpect(jsonPath("$[*].instructions").value(containsInAnyOrder(ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank, ValidationMessage.notBlank)))
-                .andExpect(jsonPath("$[*].targetLocation").value(containsInAnyOrder("name", "surname", "gender", "birthdate")));
+                .andExpect(jsonPath("homeAddress").doesNotExist());
 
         this.assertEmptyDb();
     }
@@ -167,12 +163,12 @@ public class UserControllerCreateUserTests extends E2eSetup {
         var stub = ReceiveUserStub.one();
 
         var obj = Map.of(
-                "name", stub.name(),
-            "surname", stub.surname(),
+                "name", stub.getName(),
+            "surname", stub.getSurname(),
             "gender", "",
-            "birthdate", stub.birthdate(),
-            "workAddress", Objects.requireNonNull(stub.workAddress()),
-            "homeAddress", Objects.requireNonNull(stub.homeAddress())
+            "birthdate", stub.getBirthdate(),
+            "workAddress", Objects.requireNonNull(stub.getWorkAddress()),
+            "homeAddress", Objects.requireNonNull(stub.getHomeAddress())
         );
 
         var user = this.objectMapper.writer().writeValueAsString(obj);

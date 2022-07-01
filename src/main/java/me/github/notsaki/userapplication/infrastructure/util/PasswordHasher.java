@@ -2,7 +2,9 @@ package me.github.notsaki.userapplication.infrastructure.util;
 
 import me.github.notsaki.userapplication.domain.util.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PasswordHasher implements org.springframework.security.crypto.password.PasswordEncoder, PasswordEncoder {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 

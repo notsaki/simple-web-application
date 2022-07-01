@@ -3,8 +3,8 @@ package me.github.notsaki.userapplication.infrastructure.data.error;
 import me.github.notsaki.userapplication.domain.data.error.GenericError;
 
 public class GenericErrorEntity<T> implements GenericError<T> {
-	private final T context;
-	private final String message;
+	private T context;
+	private String message;
 
 	public GenericErrorEntity(T context, String message) {
 		this.context = context;
@@ -22,5 +22,15 @@ public class GenericErrorEntity<T> implements GenericError<T> {
 
 	public String getMessage() {
 		return message;
+	}
+
+	@Override
+	public void setContext(T context) {
+		this.context = context;
+	}
+
+	@Override
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

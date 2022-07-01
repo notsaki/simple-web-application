@@ -1,9 +1,10 @@
 package me.github.notsaki.userapplication.infrastructure.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import me.github.notsaki.userapplication.domain.service.AdminService;
-import me.github.notsaki.userapplication.domain.util.PasswordEncoder;
 import me.github.notsaki.userapplication.infrastructure.model.AdminModel;
-import me.github.notsaki.userapplication.infrastructure.util.PasswordHasher;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +25,10 @@ public class ApplicationConfiguration {
 	}
 
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new PasswordHasher();
+	public ObjectMapper objectMapper() {
+		var mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+		mapper.registerModule(new Jdk8Module());
+		return mapper;
 	}
 }

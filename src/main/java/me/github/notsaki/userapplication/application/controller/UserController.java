@@ -1,8 +1,9 @@
 package me.github.notsaki.userapplication.application.controller;
 
-import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
+import me.github.notsaki.userapplication.domain.exception.BadDataException;
+import me.github.notsaki.userapplication.domain.exception.ValidationException;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.infrastructure.exception.RecordNotFoundException;
@@ -10,7 +11,6 @@ import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -30,10 +30,14 @@ public class UserController {
 	 * Save a new user. User information should be validated before reaching the controller.
 	 * @param receiveUserDto valid user information.
 	 * @return Created user information with the generated ID.
+	 * @throws ValidationException when bad data format are received.
+	 * @throws BadDataException when invalid body was received.
 	 */
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseUserDto create(@Valid @RequestBody ReceiveUserDtoEntity receiveUserDto) {
+	public ResponseUserDto create(
+			@RequestBody ReceiveUserDtoEntity receiveUserDto
+	) throws ValidationException, BadDataException {
 		return this.userService.save(receiveUserDto);
 	}
 
@@ -55,14 +59,16 @@ public class UserController {
 	 * @param user the new full user information including the unchanged properties.
 	 * @return the updated user.
 	 * @throws RecordNotFoundException when the ID doesn't match to any user.
+	 * @throws ValidationException when bad data format are received.
+	 * @throws BadDataException when invalid body was received.
 	 */
 	@PatchMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public ResponseUserDto updateById(
 			@PathVariable("id") int id,
-			@Valid @RequestBody ReceiveUserDto user
-	) throws RecordNotFoundException {
+			@RequestBody ReceiveUserDtoEntity user
+	) throws RecordNotFoundException, ValidationException, BadDataException {
 		return this.userService
 				.updateById(id, user)
 				.orElseThrow(() -> new RecordNotFoundException(Map.of("userId", id)));

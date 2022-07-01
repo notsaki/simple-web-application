@@ -6,16 +6,19 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.infrastructure.model.HomeAddressModel;
 import me.github.notsaki.userapplication.infrastructure.model.UserModel;
 import me.github.notsaki.userapplication.infrastructure.model.WorkAddressModel;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
-import java.util.Objects;
+import java.util.Optional;
 
 public class ReceiveUserDtoEntity extends ReceiveUserDto {
     private String name;
     private String surname;
     private Gender gender;
     private LocalDate birthdate;
+    @Nullable
     private String workAddress;
+    @Nullable
     private String homeAddress;
 
     public ReceiveUserDtoEntity() {
@@ -30,41 +33,52 @@ public class ReceiveUserDtoEntity extends ReceiveUserDto {
         this.homeAddress = homeAddress;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public String surname() {
+    public String getSurname() {
         return surname;
     }
 
-    public Gender gender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public LocalDate birthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public String workAddress() {
-        return workAddress;
+    public Optional<String> getWorkAddress() {
+        return Optional.ofNullable(workAddress);
     }
 
-    public String homeAddress() {
-        return homeAddress;
+    public Optional<String> getHomeAddress() {
+        return Optional.ofNullable(homeAddress);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ReceiveUserDto that = (ReceiveUserDto) o;
-        return name.equals(that.name()) && surname.equals(that.surname()) && gender == that.gender() && birthdate.equals(that.birthdate()) && Objects.equals(workAddress, that.workAddress()) && Objects.equals(homeAddress, that.homeAddress());
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, surname, gender, birthdate, workAddress, homeAddress);
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthdate(LocalDate birthdate) {
+        this.birthdate = birthdate;
+    }
+
+    public void setWorkAddress(Optional<String> workAddress) {
+        this.workAddress = workAddress.orElse(null);
+    }
+
+    public void setHomeAddress(Optional<String> homeAddress) {
+        this.homeAddress = homeAddress.orElse(null);
     }
 
     @Override

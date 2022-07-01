@@ -2,6 +2,9 @@ package me.github.notsaki.userapplication.controller;
 
 import me.github.notsaki.userapplication.application.controller.UserController;
 import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
+import me.github.notsaki.userapplication.domain.exception.BadDataException;
+import me.github.notsaki.userapplication.domain.exception.ValidationException;
+import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
@@ -33,14 +36,20 @@ public class UserControllerOnFindAllTests {
 	@Autowired
 	private UserController userController;
 
-	private final List<ReceiveUserDto> receiveUsers = ReceiveUserStub.list();
+	private final List<ReceiveUserDtoEntity> receiveUsers = ReceiveUserStub.list();
 	private List<ReceiveUserDto> returnedUsersAsReceived;
 
 	@Before
 	public void init() {
 		var users = this.receiveUsers
 				.stream()
-				.map(user -> this.userController.create(user))
+				.map(user -> {
+					try {
+						return this.userController.create(user);
+					} catch (ValidationException | BadDataException e) {
+						throw new RuntimeException(e);
+					}
+				})
 				.toList();
 
 		this.returnedUsersAsReceived = UserReverseMapper.fromResponseListToReceive(users);

@@ -1,6 +1,6 @@
 package me.github.notsaki.userapplication.e2e.user;
 
-import me.github.notsaki.userapplication.infrastructure.data.response.ResponseUserDtoEntity;
+import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -43,7 +42,7 @@ public class UserControllerFindByIdTests extends E2eSetup {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDtoEntity.class);
+        var receivedUser = this.objectMapper.readValue(body.getResponse().getContentAsString(), ResponseUserDto.class);
 
         Assert.assertEquals(this.createdUser.toResponse(), receivedUser);
     }
