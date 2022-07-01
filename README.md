@@ -10,8 +10,8 @@
 
 ### General information
 
-The application is a REST API that supports basic user management with admin authentication. An admin can view, save, update and delete 
-users. The authentication is done with JWTs.
+The application supports basic user management with admin authentication using sessions. An admin can view, save, 
+update and delete users.
 
 The application can be run through a docker container (a compose file is also provided) and the configuration is being 
 done through environment variables. The `.env.example` should be renamed to `.env` with all the required information 
@@ -32,3 +32,4 @@ instead of a MySQL.
 - `JWT_SECRET` a secret key that is used to encode and decode JWTs. Typically, it's a random not short string.
 - `ADMIN_USERNAME` the server's default admin user. This admin is used to retrieve an access token. 
 - `ADMIN_PASSWORD` the server's admin password. Recommended minimum length: above 8 characters.
+- `ALLOWED_ORIGIN` client's address that is going to be sent through headers (for CORS).

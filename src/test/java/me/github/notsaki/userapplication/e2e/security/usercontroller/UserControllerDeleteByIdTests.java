@@ -4,43 +4,35 @@ import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class UserControllerDeleteByIdTests extends E2eSetup {
 
     private final String route = Routes.user + "/1";
 
     @Test
-    public void sendingRequestWithoutToken_shouldReturnForbidden() throws Exception {
-        this.mvc
-                .perform(
-                        delete(this.route)
-                                .with(csrf().asHeader())
-                )
-                .andExpect(status().isForbidden());
+    public void sendingRequestWithoutAuthorisedCookie_shouldReturnForbidden() throws Exception {
+        this.noCookieRequest(delete(this.route));
     }
 
     @Test
-    public void sendingRequestWithInvalidToken_shouldReturnForbidden() throws Exception {
-        this.mvc
-                .perform(
-                        delete(this.route)
-                                .with(csrf().asHeader())
-                                .cookie(this.invalidCookie)
-                )
-                .andExpect(status().isForbidden());
+    public void sendingRequestWithInvalidCookie_shouldReturnForbidden() throws Exception {
+        this.invalidCookieRequest(delete(this.route));
     }
 
     @Test
-    public void sendingRequestWithExpiredToken_shouldReturnForbidden() throws Exception {
-        this.mvc
-                .perform(
-                        delete(this.route)
-                                .with(csrf().asHeader())
-                                .cookie(this.expiredCookie)
-                )
-                .andExpect(status().isForbidden());
+    public void sendingRequestWithExpiredCookie_shouldReturnForbidden() throws Exception {
+        this.expiredCookieRequest(delete(this.route));
+    }
+
+    @Test
+    public void sendingRequestWithoutCsrfToken_shouldReturnForbidden() throws Exception {
+        this.noCsrfTokenRequest(delete(this.route));
+    }
+
+    @Test
+    public void sendingRequestWithInvalidCsrfToken_shouldReturnForbidden() throws Exception {
+        this.invalidCsrfToken(delete(this.route));
     }
 }

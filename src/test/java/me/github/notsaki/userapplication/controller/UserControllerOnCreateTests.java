@@ -27,7 +27,6 @@ public class UserControllerOnCreateTests {
 	private UserRepository userRepository;
 
 	@Autowired
-	@Qualifier(AppProfile.IMPL)
 	private UserService userService;
 
 	@Autowired

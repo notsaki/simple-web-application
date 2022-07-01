@@ -1,4 +1,4 @@
-package me.github.notsaki.userapplication.util.entityreversemapper;
+package me.github.notsaki.userapplication.testutil.entityreversemapper;
 
 import me.github.notsaki.userapplication.domain.data.receive.ReceiveUserDto;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;

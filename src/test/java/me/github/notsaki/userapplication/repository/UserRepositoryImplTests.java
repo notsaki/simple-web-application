@@ -74,14 +74,17 @@ public class UserRepositoryImplTests {
 	}
 
 	@Test
-	public void onDeleteShouldReturnOneRowAffected() {
-		var users = ReceiveUserStub
-				.list()
-				.stream()
-				.map(ReceiveUserDto::toUser)
-				.toList();
+	public void onDeleteShouldReturnTrue() {
+		var user = ReceiveUserStub.one().toUser();
+		this.userRepository.save(user);
+		var result = this.userRepository.deleteById(user.getId());
+		Assert.assertTrue(result);
+	}
 
-		Assertions.assertDoesNotThrow(() -> this.userRepository.save(users.get(0)));
+	@Test
+	public void onDeleteNonExistentShouldReturnFalse() {
+		var result = this.userRepository.deleteById(1);
+		Assert.assertFalse(result);
 	}
 
 	@Test

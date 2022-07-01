@@ -1,11 +1,13 @@
 package me.github.notsaki.userapplication.infrastructure.configuration;
 
+import me.github.notsaki.userapplication.domain.service.AdminService;
+import me.github.notsaki.userapplication.domain.service.SecurityService;
+import me.github.notsaki.userapplication.domain.util.PasswordEncoder;
 import me.github.notsaki.userapplication.infrastructure.filter.AuthenticationFilter;
+import me.github.notsaki.userapplication.util.Routes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -13,16 +15,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-import javax.servlet.http.HttpServletResponse;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+	private final SecurityService securityService;
 
-	private final AuthenticationConfiguration authenticationConfiguration;
-
-	public SecurityConfiguration(AuthenticationConfiguration authenticationConfiguration) {
-		this.authenticationConfiguration = authenticationConfiguration;
+	public SecurityConfiguration(SecurityService securityService) {
+		this.securityService = securityService;
 	}
 
 	@Bean
@@ -38,25 +37,20 @@ public class SecurityConfiguration {
 				.permitAll();
 
 		http.authorizeRequests()
-				.antMatchers("/login/**")
+				.antMatchers(Routes.login + "/**")
 				.permitAll();
 
 		http.authorizeRequests()
-				.antMatchers("/user/**", "/token/**", "/invalidate/**")
+				.antMatchers(Routes.user + "/**", Routes.token + "/**", Routes.logout + "/**")
 				.authenticated();
 
 		http.logout().disable();
 
 		http.addFilterBefore(
-				new AuthenticationFilter(this.authenticationManager()),
+				new AuthenticationFilter(this.securityService),
 				UsernamePasswordAuthenticationFilter.class
 		);
 
 		return http.build();
-	}
-
-	@Bean
-	public AuthenticationManager authenticationManager() throws Exception {
-		return this.authenticationConfiguration.getAuthenticationManager();
 	}
 }

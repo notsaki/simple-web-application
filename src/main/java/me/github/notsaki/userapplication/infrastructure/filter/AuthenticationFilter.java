@@ -1,29 +1,28 @@
 package me.github.notsaki.userapplication.infrastructure.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import me.github.notsaki.userapplication.domain.service.SecurityService;
 import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
 import me.github.notsaki.userapplication.util.Routes;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Filter to authenticate user credentials. The filter only runs in the POST /login endpoint.
  */
 public class AuthenticationFilter extends OncePerRequestFilter {
-	private final AuthenticationManager authenticationManager;
+	private final SecurityService securityService;
 
-	public AuthenticationFilter(AuthenticationManager authenticationManager) {
-		this.authenticationManager = authenticationManager;
+	public AuthenticationFilter(SecurityService securityService) {
+		this.securityService = securityService;
 	}
 
 	@Override
@@ -45,16 +44,24 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 	) throws IOException, ServletException {
 		try {
 			var credentials = new ObjectMapper().readValue(request.getInputStream(), CredentialsEntity.class);
-			var token = new UsernamePasswordAuthenticationToken(credentials.username(), credentials.password());
+			var result = this.securityService.authenticate(credentials);
 
-			var authentication = authenticationManager.authenticate(token);
-			SecurityContextHolder.getContext().setAuthentication(authentication);
+			if(result.isPresent()) {
+				var authentication = new UsernamePasswordAuthenticationToken(
+						result.get().getUsername(),
+						null,
+						List.of()
+				);
 
-		} catch (IOException | BadCredentialsException exception) {
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			return;
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+
+				filterChain.doFilter(request, response);
+				return;
+			}
+
+		} catch (IOException ignore) {
 		}
 
-		filterChain.doFilter(request, response);
+		response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 	}
 }

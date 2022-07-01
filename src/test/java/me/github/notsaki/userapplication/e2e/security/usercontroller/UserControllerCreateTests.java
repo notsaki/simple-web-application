@@ -6,6 +6,7 @@ import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -13,46 +14,27 @@ public class UserControllerCreateTests extends E2eSetup {
     private final String route = Routes.user;
 
     @Test
-    public void sendingRequestWithoutToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
-
-        this.mvc
-                .perform(
-                        post(this.route)
-                                .with(csrf().asHeader())
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
-                )
-                .andExpect(status().isForbidden());
+    public void sendingRequestWithoutAuthorisedCookie_shouldReturnForbidden() throws Exception {
+        this.noCookieRequest(post(this.route));
     }
 
     @Test
-    public void sendingRequestWithInvalidToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
-
-        this.mvc
-                .perform(
-                        post(this.route)
-                                .with(csrf().asHeader())
-                                .cookie(this.invalidCookie)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
-                )
-                .andExpect(status().isForbidden());
+    public void sendingRequestWithInvalidCookie_shouldReturnForbidden() throws Exception {
+        this.invalidCookieRequest(post(this.route));
     }
 
     @Test
-    public void sendingRequestWithExpiredToken_shouldReturnForbidden() throws Exception {
-        var user = this.objectMapper.writeValueAsString(ReceiveUserStub.one());
+    public void sendingRequestWithExpiredCookie_shouldReturnForbidden() throws Exception {
+        this.expiredCookieRequest(post(this.route));
+    }
 
-        this.mvc
-                .perform(
-                        post(this.route)
-                                .with(csrf().asHeader())
-                                .cookie(this.expiredCookie)
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .content(user)
-                )
-                .andExpect(status().isForbidden());
+    @Test
+    public void sendingRequestWithoutCsrfToken_shouldReturnForbidden() throws Exception {
+        this.noCsrfTokenRequest(post(this.route));
+    }
+
+    @Test
+    public void sendingRequestWithInvalidCsrfToken_shouldReturnForbidden() throws Exception {
+        this.invalidCsrfToken(post(this.route));
     }
 }

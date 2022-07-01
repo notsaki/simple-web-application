@@ -2,14 +2,12 @@ package me.github.notsaki.userapplication.e2e;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import me.github.notsaki.userapplication.infrastructure.data.receive.CredentialsEntity;
-import me.github.notsaki.userapplication.util.Routes;
-import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,7 +17,7 @@ import javax.servlet.http.Cookie;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -41,7 +39,63 @@ public abstract class E2eSetup {
 
 	protected static MockHttpServletRequestBuilder withAuth(MockHttpServletRequestBuilder context) {
 		return context
-				.with(csrf().asHeader())
-				.with(user("admin"));
+				.with(csrfHeader())
+				.with(admin());
+	}
+
+	protected static SecurityMockMvcRequestPostProcessors.UserRequestPostProcessor admin() {
+		return user("admin");
+	}
+
+	protected static SecurityMockMvcRequestPostProcessors.CsrfRequestPostProcessor csrfHeader() {
+		return csrf().asHeader();
+	}
+
+	protected void expiredCookieRequest(MockHttpServletRequestBuilder request) throws Exception {
+		this.mvc
+				.perform(
+						request
+								.cookie(this.expiredCookie)
+								.with(csrfHeader())
+				)
+				.andExpect(status().isForbidden());
+	}
+
+	protected void invalidCookieRequest(MockHttpServletRequestBuilder request) throws Exception {
+		this.mvc
+				.perform(
+						request
+								.cookie(this.invalidCookie)
+								.with(csrfHeader())
+				)
+				.andExpect(status().isForbidden());
+	}
+
+	protected void noCookieRequest(MockHttpServletRequestBuilder request) throws Exception {
+		this.mvc
+				.perform(
+						request
+								.with(csrfHeader())
+				)
+				.andExpect(status().isForbidden());
+	}
+
+	protected void noCsrfTokenRequest(MockHttpServletRequestBuilder request) throws Exception {
+		this.mvc
+				.perform(
+						request
+								.with(admin())
+				)
+				.andExpect(status().isForbidden());
+	}
+
+	protected void invalidCsrfToken(MockHttpServletRequestBuilder request) throws Exception {
+		this.mvc
+				.perform(
+						request
+								.with(admin())
+								.header("X-CSRF-Token", "invalid")
+				)
+				.andExpect(status().isForbidden());
 	}
 }

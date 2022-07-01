@@ -6,7 +6,7 @@ import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.domain.service.UserService;
 import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
-import me.github.notsaki.userapplication.util.entityreversemapper.UserReverseMapper;
+import me.github.notsaki.userapplication.testutil.entityreversemapper.UserReverseMapper;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,7 +29,6 @@ public class UserControllerOnFindAllTests {
 	private UserRepository userRepository;
 
 	@Autowired
-	@Qualifier(AppProfile.IMPL)
 	private UserService userService;
 
 	@Autowired
