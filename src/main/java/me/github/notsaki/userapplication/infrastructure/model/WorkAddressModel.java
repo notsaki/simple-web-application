@@ -14,7 +14,7 @@ public class WorkAddressModel implements WorkAddress {
 	@Column
 	private int id;
 
-	@Column
+	@Column(length = 129)
 	private String address;
 
 	protected WorkAddressModel() {

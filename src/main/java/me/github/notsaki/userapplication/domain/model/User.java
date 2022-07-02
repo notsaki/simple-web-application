@@ -2,9 +2,6 @@ package me.github.notsaki.userapplication.domain.model;
 
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
-import me.github.notsaki.userapplication.infrastructure.model.HomeAddressModel;
-import me.github.notsaki.userapplication.infrastructure.model.WorkAddressModel;
-import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -30,13 +27,13 @@ public interface User {
 
     void setBirthdate(LocalDate birthdate);
 
-    Optional<WorkAddressModel> getWorkAddress();
+    Optional<WorkAddress> getWorkAddress();
 
-    void setWorkAddress(@Nullable WorkAddressModel workAddress);
+    void setWorkAddress(WorkAddress workAddress);
 
-    Optional<HomeAddressModel> getHomeAddress();
+    Optional<HomeAddress> getHomeAddress();
 
-    void setHomeAddress(HomeAddressModel homeAddress);
+    void setHomeAddress(HomeAddress homeAddress);
 
     boolean equals(Object o);
 

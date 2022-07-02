@@ -38,8 +38,8 @@ public class UserReverseMapper {
 				user.surname(),
 				user.gender(),
 				user.birthdate(),
-				new WorkAddressModel(user.workAddress()),
-				new HomeAddressModel(user.homeAddress())
+				user.workAddress().map(WorkAddressModel::new).orElse(null),
+				user.homeAddress().map(HomeAddressModel::new).orElse(null)
 		);
 	}
 
@@ -56,8 +56,8 @@ public class UserReverseMapper {
 				user.surname(),
 				user.gender(),
 				user.birthdate(),
-				user.workAddress(),
-				user.homeAddress()
+				user.workAddress().orElse(null),
+				user.homeAddress().orElse(null)
 		);
 	}
 

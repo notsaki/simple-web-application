@@ -3,7 +3,6 @@ package me.github.notsaki.userapplication.repository;
 import me.github.notsaki.userapplication.domain.repository.AdminRepository;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
-import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -26,6 +26,7 @@ public class AdminRepositoryImplTests {
 	@Test
 	public void onSaveShouldReturnTheSameUser() {
 		var admin = AdminStub.one();
+		admin.setUsername("admin2");
 		var result = this.adminRepository.save(admin);
 
 		Assert.assertEquals(result, admin);
@@ -34,8 +35,9 @@ public class AdminRepositoryImplTests {
 	@Test
 	public void onSaveDuplicateShouldThrow() {
 		var admin = AdminStub.one();
+		admin.setUsername("admin2");
 		this.adminRepository.save(admin);
 
-		Assertions.assertThrows(ConstraintViolationException.class, () -> this.adminRepository.save(admin));
+		Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> this.adminRepository.save(admin));
 	}
 }

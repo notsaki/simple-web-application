@@ -3,6 +3,7 @@ package me.github.notsaki.userapplication.domain.data.response;
 import me.github.notsaki.userapplication.domain.model.Gender;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 public record ResponseUserDto(
 		int id,
@@ -10,7 +11,7 @@ public record ResponseUserDto(
 		String surname,
 		Gender gender,
 		LocalDate birthdate,
-		String workAddress,
-		String homeAddress
+		Optional<String> workAddress,
+		Optional<String> homeAddress
 ) {
 }

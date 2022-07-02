@@ -3,7 +3,9 @@ package me.github.notsaki.userapplication.infrastructure.model;
 import me.github.notsaki.userapplication.domain.data.response.ResponseUserDto;
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.Gender;
+import me.github.notsaki.userapplication.domain.model.HomeAddress;
 import me.github.notsaki.userapplication.domain.model.User;
+import me.github.notsaki.userapplication.domain.model.WorkAddress;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -19,10 +21,10 @@ public class UserModel implements User {
 	@Column
 	private int id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 65)
 	private String name;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 65)
 	private String surname;
 
 	@Enumerated
@@ -112,20 +114,24 @@ public class UserModel implements User {
 		this.birthdate = birthdate;
 	}
 
-	public Optional<WorkAddressModel> getWorkAddress() {
+	public Optional<WorkAddress> getWorkAddress() {
 		return Optional.ofNullable(workAddress);
 	}
 
-	public void setWorkAddress(@Nullable WorkAddressModel workAddress) {
-		this.workAddress = workAddress;
+	public void setWorkAddress(@Nullable WorkAddress workAddress) {
+		this.workAddress = Optional.ofNullable(workAddress)
+				.map(address -> new WorkAddressModel(workAddress.getId(), workAddress.getAddress()))
+				.orElse(null);
 	}
 
-	public Optional<HomeAddressModel> getHomeAddress() {
+	public Optional<HomeAddress> getHomeAddress() {
 		return Optional.ofNullable(homeAddress);
 	}
 
-	public void setHomeAddress(HomeAddressModel homeAddress) {
-		this.homeAddress = homeAddress;
+	public void setHomeAddress(@Nullable HomeAddress homeAddress) {
+		this.homeAddress = Optional.ofNullable(homeAddress)
+				.map(address -> new HomeAddressModel(homeAddress.getId(), homeAddress.getAddress()))
+				.orElse(null);
 	}
 
 	@Override
@@ -148,8 +154,8 @@ public class UserModel implements User {
 				this.getSurname(),
 				this.getGender(),
 				this.getBirthdate(),
-				this.getWorkAddress().map(WorkAddressModel::getAddress).orElse(null),
-				this.getHomeAddress().map(HomeAddressModel::getAddress).orElse(null)
+				this.getWorkAddress().map(WorkAddress::getAddress),
+				this.getHomeAddress().map(HomeAddress::getAddress)
 		);
 	}
 

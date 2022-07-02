@@ -6,9 +6,9 @@ import me.github.notsaki.userapplication.domain.model.User;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
 import me.github.notsaki.userapplication.e2e.E2eSetup;
 import me.github.notsaki.userapplication.infrastructure.data.receive.ReceiveUserDtoEntity;
+import me.github.notsaki.userapplication.testutil.entityreversemapper.UserReverseMapper;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.Routes;
-import me.github.notsaki.userapplication.testutil.entityreversemapper.UserReverseMapper;
 import me.github.notsaki.userapplication.util.stub.user.ReceiveUserStub;
 import org.junit.Assert;
 import org.junit.Before;
@@ -101,7 +101,7 @@ public class UserControllerUpdateUserTests extends E2eSetup {
     }
 
     @Test
-    public void sendingINvalidData_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
+    public void sendingInvalidData_shouldReturnUnprocessableEntityAndNotUpdateAnyUser() throws Exception {
         var obj = new ReceiveUserDtoEntity(
                 "",
                 "",

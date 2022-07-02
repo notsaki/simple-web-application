@@ -1,5 +1,6 @@
 package me.github.notsaki.userapplication.infrastructure.model;
 
+import me.github.notsaki.userapplication.domain.model.HomeAddress;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -7,13 +8,13 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "home_addresses")
-public class HomeAddressModel {
+public class HomeAddressModel implements HomeAddress {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private int id;
 
-	@Column
+	@Column(length = 129)
 	private String address;
 
 	protected HomeAddressModel() {

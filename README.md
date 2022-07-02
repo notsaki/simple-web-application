@@ -29,7 +29,13 @@ instead of a MySQL.
 - `MYSQLDB_DOCKER_PORT` the database's container port that is not exposed outside of docker.
 - `SPRING_LOCAL_PORT` server port that is exposed.
 - `SPRING_DOCKER_PORT` the server's container port that is not exposed outside of docker.
-- `JWT_SECRET` a secret key that is used to encode and decode JWTs. Typically, it's a random not short string.
 - `ADMIN_USERNAME` the server's default admin user. This admin is used to retrieve an access token. 
-- `ADMIN_PASSWORD` the server's admin password. Recommended minimum length: above 8 characters.
+- `ADMIN_PASSWORD` the server's admin password. Recommended minimum length: 8 characters.
 - `ALLOWED_ORIGIN` client's address that is going to be sent through headers (for CORS).
+
+### Network configuration
+
+- `NETWORK_SUBNET` subnet mask for the network. Client should have the same value.
+- `NETWORK_GATEWAY` gateway address for the network. Client should have the same value.
+- `NETWORK_SERVER_IP` static IP address for the server.
+- `NETWORK_DB_IP` static IP address for the database.

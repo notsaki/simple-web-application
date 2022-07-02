@@ -1,6 +1,7 @@
 package me.github.notsaki.userapplication.infrastructure.configuration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import me.github.notsaki.userapplication.domain.service.AdminService;
@@ -29,6 +30,7 @@ public class ApplicationConfiguration {
 		var mapper = new ObjectMapper();
 		mapper.registerModule(new JavaTimeModule());
 		mapper.registerModule(new Jdk8Module());
+		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		return mapper;
 	}
 }
