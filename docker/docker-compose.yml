@@ -9,9 +9,6 @@ services:
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
-    networks:
-      userdb:
-        ipv4_address: ${NETWORK_SERVER_IP}
     ports:
       - ${SPRING_LOCAL_PORT}:${SPRING_DOCKER_PORT}
     environment:
@@ -22,7 +19,6 @@ services:
         "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.MySQL5InnoDBDialect",
         "spring.jpa.hibernate.ddl-auto": "update",
         "spring.profiles.active": "impl",
-        "header.allowed.origin": "$ALLOWED_ORIGIN",
         "admin.username": "$ADMIN_USERNAME",
         "admin.password": "$ADMIN_PASSWORD"
       }'
@@ -32,9 +28,6 @@ services:
   mysqldb:
     image: mysql
     restart: unless-stopped
-    networks:
-      userdb:
-        ipv4_address: ${NETWORK_DB_IP}
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - MYSQL_DATABASE=$MYSQLDB_DATABASE
@@ -45,10 +38,3 @@ services:
 
 volumes:
   db:
-networks:
-  userdb:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: ${NETWORK_SUBNET}
-          gateway: ${NETWORK_GATEWAY}

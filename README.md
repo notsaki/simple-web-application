@@ -17,9 +17,10 @@ The application can be run through a docker container (a compose file is also pr
 done through environment variables. The `.env.example` should be renamed to `.env` with all the required information 
 changed.
 
-If the app is run in development mode, it should be done locally, in which case the application.properties file will be
-used for configuration. Inside the container, this file is being deleted. The dev environment uses an H2 database 
-instead of a MySQL.
+- Before building the app, a production build of the client should be put into `/resources/static` directory.
+- If the app is run in development mode, the application.properties file will be used for configuration. Inside the 
+container, this file is being deleted. 
+- The dev environment uses an H2 database instead of a MySQL.
 
 ### Environment variables
 - `MYSQLDB_USER` the admin database user.
@@ -32,10 +33,3 @@ instead of a MySQL.
 - `ADMIN_USERNAME` the server's default admin user. This admin is used to retrieve an access token. 
 - `ADMIN_PASSWORD` the server's admin password. Recommended minimum length: 8 characters.
 - `ALLOWED_ORIGIN` client's address that is going to be sent through headers (for CORS).
-
-### Network configuration
-
-- `NETWORK_SUBNET` subnet mask for the network. Client should have the same value.
-- `NETWORK_GATEWAY` gateway address for the network. Client should have the same value.
-- `NETWORK_SERVER_IP` static IP address for the server.
-- `NETWORK_DB_IP` static IP address for the database.
