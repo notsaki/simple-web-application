@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PasswordHasher implements org.springframework.security.crypto.password.PasswordEncoder, PasswordEncoder {
+public class PasswordHasher implements PasswordEncoder {
 	private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 	@Override
@@ -16,15 +16,5 @@ public class PasswordHasher implements org.springframework.security.crypto.passw
 	@Override
 	public boolean verify(String raw, String encoded) {
 		return this.bCryptPasswordEncoder.matches(raw, encoded);
-	}
-
-	@Override
-	public String encode(CharSequence rawPassword) {
-		return this.encode(rawPassword.toString());
-	}
-
-	@Override
-	public boolean matches(CharSequence rawPassword, String encodedPassword) {
-		return this.verify(rawPassword.toString(), encodedPassword);
 	}
 }

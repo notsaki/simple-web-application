@@ -39,4 +39,4 @@ db.mv.db
 db.trace.db
 
 client/
-src/main/resources/static/*
+src/main/resources/static/

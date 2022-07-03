@@ -5,7 +5,6 @@ import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class UserControllerDeleteByIdTests extends E2eSetup {
 

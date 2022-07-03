@@ -2,14 +2,15 @@ package me.github.notsaki.userapplication.util.mock.repository;
 
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.User;
-import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
+import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.user.UserStub;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Profile(AppProfile.MOCK)

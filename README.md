@@ -20,7 +20,7 @@ changed.
 - Before building the app, a production build of the client should be put into `/resources/static` directory (`bundle.js` 
 and `index.html` files).
 - If the app is run in development mode, the application.properties file will be used for configuration. Inside the 
-container, this file is being deleted. 
+container, this file is being deleted.
 - The dev environment uses an H2 database instead of a MySQL.
 
 ### Requirements

@@ -4,7 +4,7 @@ rm -rf client
 git clone https://github.com/notsaki/simple-web-application-client.git
 mv simple-web-application-client client
 
-cp ./client/.env.example client/.env
+cp ./client/.env.example ./client/.env
 printf "API_URI=http://0.0.0.0:6868" > ./client/.env
 
 cd client && yarn install && yarn build

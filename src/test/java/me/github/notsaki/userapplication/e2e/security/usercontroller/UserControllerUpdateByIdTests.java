@@ -5,7 +5,6 @@ import me.github.notsaki.userapplication.util.Routes;
 import org.junit.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class UserControllerUpdateByIdTests extends E2eSetup {
     private final String route = Routes.user;

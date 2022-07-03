@@ -2,9 +2,9 @@ package me.github.notsaki.userapplication.infrastructure.repository;
 
 import me.github.notsaki.userapplication.domain.data.response.UserListItemDto;
 import me.github.notsaki.userapplication.domain.model.User;
-import me.github.notsaki.userapplication.util.AppProfile;
-import me.github.notsaki.userapplication.infrastructure.model.UserModel;
 import me.github.notsaki.userapplication.domain.repository.UserRepository;
+import me.github.notsaki.userapplication.infrastructure.model.UserModel;
+import me.github.notsaki.userapplication.util.AppProfile;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;

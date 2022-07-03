@@ -4,8 +4,6 @@ import me.github.notsaki.userapplication.infrastructure.util.PasswordHasher;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.regex.Pattern;
-
 import static me.github.notsaki.userapplication.testutil.HashMatcher.isHash;
 
 public class PasswordHasherTests {

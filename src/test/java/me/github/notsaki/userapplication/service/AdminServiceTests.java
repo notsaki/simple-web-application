@@ -3,7 +3,6 @@ package me.github.notsaki.userapplication.service;
 import me.github.notsaki.userapplication.domain.repository.AdminRepository;
 import me.github.notsaki.userapplication.domain.service.AdminService;
 import me.github.notsaki.userapplication.infrastructure.util.PasswordHasher;
-import me.github.notsaki.userapplication.testutil.HashMatcher;
 import me.github.notsaki.userapplication.util.AppProfile;
 import me.github.notsaki.userapplication.util.stub.admin.AdminStub;
 import org.junit.Assert;
@@ -58,7 +57,7 @@ public class AdminServiceTests {
                 .orElseThrow()
                 .getPassword();
 
-        var match = this.passwordHasher.matches(AdminStub.one().getPassword(), hash);
+        var match = this.passwordHasher.verify(AdminStub.one().getPassword(), hash);
 
         Assert.assertTrue(match);
     }
