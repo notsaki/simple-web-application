@@ -37,3 +37,6 @@ docker/.m2
 
 db.mv.db
 db.trace.db
+
+client/
+src/main/resources/static/*

@@ -17,10 +17,18 @@ The application can be run through a docker container (a compose file is also pr
 done through environment variables. The `.env.example` should be renamed to `.env` with all the required information 
 changed.
 
-- Before building the app, a production build of the client should be put into `/resources/static` directory.
+- Before building the app, a production build of the client should be put into `/resources/static` directory (`bundle.js` 
+and `index.html` files).
 - If the app is run in development mode, the application.properties file will be used for configuration. Inside the 
 container, this file is being deleted. 
 - The dev environment uses an H2 database instead of a MySQL.
+
+### Requirements
+
+- Java 17.
+- Node JS and Yarn for the client app.
+- Makefile to run the scripts.
+- Docker and Docker Compose.
 
 ### Environment variables
 - `MYSQLDB_USER` the admin database user.
@@ -33,3 +41,13 @@ container, this file is being deleted.
 - `ADMIN_USERNAME` the server's default admin user. This admin is used to retrieve an access token. 
 - `ADMIN_PASSWORD` the server's admin password. Recommended minimum length: 8 characters.
 - `ALLOWED_ORIGIN` client's address that is going to be sent through headers (for CORS).
+
+### Makefile Scripts
+
+- `build` build the container.
+- `run` run the application.
+- `deploy` clone the client, build and run whole the application.
+
+### Deploy
+
+Simply run the `deploy.sh` script.
